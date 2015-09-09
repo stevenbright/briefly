@@ -19,6 +19,7 @@
   </description>
 
   <modules>
+    <module>briefly-website-static</module>
     <module>briefly-website</module>
   </modules>
 
