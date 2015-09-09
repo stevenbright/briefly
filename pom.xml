@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.truward.brikar</groupId>
+    <artifactId>brikar</artifactId>
+    <version>1.2.17</version>
+  </parent>
+
+  <groupId>briefly</groupId>
+  <artifactId>briefly</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Briefly Application</name>
+
+  <description>
+    Briefly
+  </description>
+
+  <modules>
+    <module>briefly-website</module>
+  </modules>
+
+  <properties>
+    <brikar.version>1.2.17</brikar.version>
+
+    <!--  compiler settings -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencyManagement>
+
+    <dependencies>
+      <!-- Eolaire Model -->
+      <dependency>
+        <groupId>com.truward.orion</groupId>
+        <artifactId>eolaire-model</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+
+      <!-- Brikar -->
+      <dependency>
+        <groupId>com.truward.brikar.protobuf</groupId>
+        <artifactId>brikar-protobuf-http-bin</artifactId>
+        <version>${brikar.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.truward.brikar.protobuf</groupId>
+        <artifactId>brikar-protobuf-jackson</artifactId>
+        <version>${brikar.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.truward.brikar.protobuf</groupId>
+        <artifactId>brikar-protobuf-http-json</artifactId>
+        <version>${brikar.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.truward.brikar</groupId>
+        <artifactId>brikar-common</artifactId>
+        <version>${brikar.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.truward.brikar</groupId>
+        <artifactId>brikar-client</artifactId>
+        <version>${brikar.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.truward.brikar</groupId>
+        <artifactId>brikar-server</artifactId>
+        <version>${brikar.version}</version>
+      </dependency>
+
+      <!-- Spring Persistence -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+
+      <!-- DB Drivers -->
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>1.4.183</version>
+      </dependency>
+
+      <!-- Connection Pooling -->
+      <dependency>
+        <groupId>com.mchange</groupId>
+        <artifactId>c3p0</artifactId>
+        <version>0.9.5</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
+
