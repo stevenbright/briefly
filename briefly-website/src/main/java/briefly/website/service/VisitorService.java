@@ -1,4 +1,4 @@
-package com.alexshabanov.sample.brikar.website.service;
+package briefly.website.service;
 
 /**
  * Increments number of active visitors, called from the main page.

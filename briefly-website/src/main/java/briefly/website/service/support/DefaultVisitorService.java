@@ -1,6 +1,6 @@
-package com.alexshabanov.sample.brikar.website.service.support;
+package briefly.website.service.support;
 
-import com.alexshabanov.sample.brikar.website.service.VisitorService;
+import briefly.website.service.VisitorService;
 import com.truward.brikar.common.log.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

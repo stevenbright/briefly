@@ -8,7 +8,7 @@
   <import resource="classpath:/spring/default-webmvc-base.xml"/>
 
   <!-- Controllers -->
-  <bean class="com.alexshabanov.sample.brikar.website.controller.PublicPageController" autowire="constructor"/>
+  <bean class="briefly.website.controller.PublicPageController" autowire="constructor"/>
 
   <!-- Annotation driven support for MVC controllers -->
   <mvc:annotation-driven/>

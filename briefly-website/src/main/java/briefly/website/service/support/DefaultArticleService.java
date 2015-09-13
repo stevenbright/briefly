@@ -1,7 +1,7 @@
-package com.alexshabanov.sample.brikar.website.service.support;
+package briefly.website.service.support;
 
-import com.alexshabanov.sample.brikar.website.model.Article;
-import com.alexshabanov.sample.brikar.website.service.ArticleService;
+import briefly.website.model.Article;
+import briefly.website.service.ArticleService;
 import com.truward.brikar.common.log.LogLapse;
 import org.springframework.stereotype.Service;
 

@@ -14,7 +14,7 @@
 
   <properties>
     <!-- app launcher -->
-    <launcher.mainClass>com.alexshabanov.sample.brikar.website.Launcher</launcher.mainClass>
+    <launcher.mainClass>briefly.website.Launcher</launcher.mainClass>
   </properties>
 
 

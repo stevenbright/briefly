@@ -1,4 +1,4 @@
-package com.alexshabanov.sample.brikar.website.model;
+package briefly.website.model;
 
 public final class Article {
   private final String heading;

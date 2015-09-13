@@ -1,4 +1,4 @@
-package com.alexshabanov.sample.brikar.website;
+package briefly.website;
 
 import com.truward.brikar.server.launcher.StandardLauncher;
 
