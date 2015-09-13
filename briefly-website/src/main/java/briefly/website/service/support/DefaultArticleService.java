@@ -1,5 +1,6 @@
 package briefly.website.service.support;
 
+import briefly.model.Favorites;
 import briefly.website.model.Article;
 import briefly.website.service.ArticleService;
 import com.truward.brikar.common.log.LogLapse;
@@ -12,9 +13,12 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public final class DefaultArticleService implements ArticleService {
 
+  Favorites favorites;
+
   @LogLapse("GetArticles")
   @Override
   public List<Article> getArticles() {
+    Favorites favorites = Favorites.builder().name("test").build();
     try {
       Thread.sleep(200 + ThreadLocalRandom.current().nextInt(200));
     } catch (InterruptedException e) {
