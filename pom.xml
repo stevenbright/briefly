@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.truward.brikar</groupId>
     <artifactId>brikar</artifactId>
-    <version>1.2.17</version>
+    <version>1.3.18</version>
   </parent>
 
   <groupId>briefly</groupId>
@@ -15,16 +15,26 @@
   <name>Briefly Application</name>
 
   <description>
-    Briefly
+    Briefly Parent Module
   </description>
 
   <modules>
-    <module>briefly-website-static</module>
+    <module>briefly-static-content</module>
     <module>briefly-website</module>
   </modules>
 
   <properties>
-    <brikar.version>1.2.17</brikar.version>
+    <!-- common libraries -->
+    <slf4j.version>1.7.12</slf4j.version>
+    <commons-logging.version>1.1.1</commons-logging.version>
+
+    <!--<spring.version>3.2.14.RELEASE</spring.version>-->
+    <!--<spring-security.version>3.2.3.RELEASE</spring-security.version>-->
+
+    <brikar.version>1.3.18</brikar.version>
+
+    <user-service.version>1.0.1</user-service.version>
+    <eolaire-client.version>1.0.0</eolaire-client.version>
 
     <!--  compiler settings -->
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -38,7 +48,19 @@
       <dependency>
         <groupId>com.truward.orion</groupId>
         <artifactId>eolaire-model</artifactId>
-        <version>1.0.0</version>
+        <version>${eolaire-client.version}</version>
+      </dependency>
+
+      <!-- User Service Model -->
+      <dependency>
+        <groupId>com.truward.orion</groupId>
+        <artifactId>user-service-model</artifactId>
+        <version>${user-service.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.truward.orion</groupId>
+        <artifactId>user-service-spring-security</artifactId>
+        <version>${user-service.version}</version>
       </dependency>
 
       <!-- Brikar -->
