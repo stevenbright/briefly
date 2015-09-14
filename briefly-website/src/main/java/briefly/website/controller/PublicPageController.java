@@ -15,10 +15,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/g/")
 public final class PublicPageController {
-//  private ArticleService articleService;
-//  private VisitorService visitorService;
+//  private OverviewService articleService;
+//  private CommentService visitorService;
 //
-//  public PublicPageController(ArticleService articleService, VisitorService visitorService) {
+//  public PublicPageController(OverviewService articleService, CommentService visitorService) {
 //    this.articleService = Objects.requireNonNull(articleService, "articleService");
 //    this.visitorService = Objects.requireNonNull(visitorService, "visitorService");
 //  }

@@ -2,7 +2,7 @@ package briefly.website.service.support;
 
 import briefly.model.Favorites;
 import briefly.website.model.Article;
-import briefly.website.service.ArticleService;
+import briefly.website.service.OverviewService;
 import com.truward.brikar.common.log.LogLapse;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public final class DefaultArticleService implements ArticleService {
+public final class DefaultOverviewService implements OverviewService {
 
   Favorites favorites;
 

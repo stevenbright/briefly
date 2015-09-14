@@ -4,6 +4,6 @@ import briefly.website.model.Article;
 
 import java.util.List;
 
-public interface ArticleService {
+public interface OverviewService {
   List<Article> getArticles();
 }
