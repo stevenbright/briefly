@@ -1,9 +1,11 @@
 package briefly.website.service;
 
-import briefly.website.model.Article;
-
-import java.util.List;
+import briefly.model.content.Overview;
 
 public interface OverviewService {
-  List<Article> getArticles();
+  default Overview getOverview(long itemId) {
+    throw new UnsupportedOperationException();
+  }
+
+
 }
