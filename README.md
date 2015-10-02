@@ -29,6 +29,11 @@ curl -u testonly:test -H 'Accept: application/json; charset=UTF-8' -H 'Content-T
 
 # Client-side Development
 
+## Open Demo Page
+
+Try ```${path}/index.html?mode=0#/demo``` and ```${path}/index.html?mode=1#/demo```, where path points to where index.html
+is served from (can be local or deployed somewhere) and ``mode`` designates a page, that will be served.
+
 ## Start Watcher
 
 ```

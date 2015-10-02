@@ -5,6 +5,7 @@ var Router = require('director').Router;
 
 var StorefrontPage = require('./storefront/storefront-page.js');
 var AboutPage = require('./about/about-page.js');
+var DemoPage = require('./demo/demo-page.js');
 
 // navigation IDs
 
@@ -12,6 +13,8 @@ var Nav = {
   UNDEFINED: "UNDEFINED",
 
   STOREFRONT: "STOREFRONT",
+
+  DEMO: "DEMO",
 
   ABOUT: "ABOUT"
 };
@@ -53,8 +56,12 @@ module.exports = React.createClass({
     var gotoStorefrontPage = this.setState.bind(this, {nowShowing: Nav.STOREFRONT});
     var gotoAboutPage = this.setState.bind(this, {nowShowing: Nav.ABOUT});
 
+    // TODO: disable in prod
+    var gotoDemoPage = this.setState.bind(this, {nowShowing: Nav.DEMO});
+
     var router = Router({
       '/storefront': gotoStorefrontPage,
+      '/demo': gotoDemoPage,
       '/about': gotoAboutPage
     });
 
@@ -83,6 +90,10 @@ module.exports = React.createClass({
       case Nav.ABOUT:
         setStartTitle("About");
         return (<AboutPage />);
+
+      case Nav.DEMO: // should be inactive in prod
+        setStartTitle("Demo");
+        return (<DemoPage />);
 
       default:
         setStartTitle();
