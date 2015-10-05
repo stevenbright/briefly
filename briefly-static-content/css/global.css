@@ -12,7 +12,7 @@ body {
 /* Custom */
 .retell-entry {
   margin-top: 1em;
-  border-top: 1px solid #d3d7cf;
+  /*border-top: 1px solid #d3d7cf;*/
   padding-top: 0.5em;
 }
 
