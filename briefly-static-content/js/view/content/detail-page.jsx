@@ -30,9 +30,8 @@ module.exports = React.createClass({
           <li><a href="#">Discussion</a></li>
         </ul>
       </div>
-    );
+    ),;
 
-    // https://en.wikipedia.org/wiki/The_Little_Lady_of_the_Big_House
     var atf = (
       <div className="row">
         <div className="col-md-3">
