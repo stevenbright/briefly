@@ -1,6 +1,7 @@
 var ajax = require('rsvp-ajax');
 var cache = require('rsvp-cache');
 var rsvp = require('rsvp');
+
 var DEFAULT_LIMIT = require('../util/constants.js').DEFAULT_LIMIT;
 
 function prepareRequestWithOffsetAndLimit(offsetToken, limit) {
@@ -70,6 +71,8 @@ if (window.location.href.startsWith("file")) {
       };
     }
   }
+
+  window["_BRIEF_SRV"] = s;
 
   module.exports.BrieflyService = s;
 } else {

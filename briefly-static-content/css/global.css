@@ -6,7 +6,7 @@ body {
 
 /* Navbar icon */
 .navbar-brand .glyphicon {
-  color: #00ff99;
+  color: #ff9900;
 }
 
 /* Custom */
@@ -20,3 +20,21 @@ body {
   color: #f0ad4e;
 }
 
+
+/* Favorites */
+
+.j-fav-link .star {
+  display: none;
+}
+
+.j-fav-link .unstar {
+  display: inline;
+}
+
+.j-fav-link.fav .star {
+  display: inline;
+}
+
+.j-fav-link.fav .unstar {
+  display: none;
+}

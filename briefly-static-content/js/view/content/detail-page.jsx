@@ -1,40 +1,65 @@
 var React = require('React');
 
 var RetellSmallItem = require('./retell-small-item.js');
+var FavStar = require('../common/fav-star.js');
 
 module.exports = React.createClass({
   render: function() {
+    //
+    // Model
+    //
+
     // Images(or Media), Title, Download Samples + Buy, Overview, Retells
     var itemModel;
     itemModel = {
-      title: "The Little Lady of the Big House",
-      authors: [{name: "Jack London"}],
-      overview: "The Little Lady of the Big House (1915) is a novel by American writer Jack London. Biographer Clarice Stasz states that it is \"not autobiography,\" but speaks of his \"frank borrowing from his life with Charmian\" and says it is \"psychologically valid as a mirror of events during [the] winter [of 1912–13]. The story concerns a love triangle. The protagonist, Dick Forrest, is a rancher with a poetic streak (his \"acorn song\" recalls London's play, \"The Acorn Planters.\"). His wife, Paula, is a vivacious, athletic, and sexually self-aware woman (in one scene, she rides a stallion into a \"swimming tank,\" emerging in \"a white silken slip of a bathing suit that molded to her form like a marble-carven veiling of drapery.\") Paula, like Charmian, is subject to insomnia; and Paula, like Charmian, is unable to bear children. Based on a reading of Charmian's diary, Stasz identifies the third vertex of the triangle, Evan Graham, with two real-life men named Laurie Smith and Allan Dunn. Even minor characters can be identified; Forrest's servant Oh My resembles London's valet Nakata. The long-bearded hobo philosopher Aaron Hancock resembles the real-lifelong-bearded hobo philosopher Frank Strawn-Hamilton, who was a long-term guest at the London ranch. Sculptor Haakan Frolich makes an appearance as \"the sculptor Froelig\" — and painter Xavier Martinez appears as the character \"Xavier Martinez!\"",
+      title: "A Christmas Carol",
+      authors: [{id: 1, name: "Charles Dickens"}/*, {id: 2, name: "John Brown"}*/],
+      overview: "A Christmas Carol is a novella by Charles Dickens, first published in London by Chapman & Hall on 19 December 1843.[1] The novella met with instant success and critical acclaim. A Christmas Carol tells the story of a bitter old miser named Ebenezer Scrooge and his transformation into a gentler, kindlier man after visitations by the ghost of his former business partner Jacob Marley and the Ghosts of Christmases Past, Present and Yet to Come.",
       media: {
         image: {
-          url: "https://upload.wikimedia.org/wikipedia/en/8/8b/LittleLadyOfTheBigHouse.JPG",
-          alt: "LittleLadyOfTheBigHouse.JPG"
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Charles_Dickens-A_Christmas_Carol-Cloth-First_Edition_1843.jpg/314px-Charles_Dickens-A_Christmas_Carol-Cloth-First_Edition_1843.jpg",
+          alt: "A_Christmas_Carol-Cloth-First_Edition_1843.jpg"
         }
       }
     };
+
+    var retellItem1 = {
+      author: {name: "Edward Morrison"},
+      date: 1443005490128,
+      brief: "An excellent christmas tale!"
+    };
+    var retellItem2 = {
+      author: {name: "Mike Dwait"},
+      date: 1444015490433,
+      brief: "Another story of a great author"
+    };
+
+    //
+    // Render
+    //
 
     var media = (
       <img alt={itemModel.media.image.alt} src={itemModel.media.image.url} width="100%" />
     );
 
+    var personNodes = itemModel.authors.map(function (person) {
+      return (<a key={person.id} href="#">{person.name}</a>);
+    });
+
     var subTitle = (
       <div className="clearfix">
-        <p className="pull-left">by <a href="#">Jack London</a>&nbsp;</p>
+        <p className="pull-left">by {personNodes}</p>
         <ul className="list-inline pull-right">
           <li><a href="#">Comments</a></li>
           <li><a href="#">Discussion</a></li>
         </ul>
       </div>
-    ),;
+    );
 
     var atf = (
       <div className="row">
         <div className="col-md-3">
+          <FavStar id={this.props.personId} type='person' isFavorite={false}/>
           {media}
         </div>
         <div className="col-md-7">
@@ -55,17 +80,6 @@ module.exports = React.createClass({
         </div>
       </div>
     );
-
-    var retellItem1 = {
-      author: {name: "Edward Morrison"},
-      date: 1443005490433,
-      brief: "An interesting story about second life of Jack"
-    };
-    var retellItem2 = {
-      author: {name: "Mike Dwait"},
-      date: 1444015490433,
-      brief: "Another story of a great author"
-    };
 
     var retells = (
       <div className="row">
