@@ -10,16 +10,16 @@ var parseQueryString = require('../../util/uri.js').parseQueryString;
 module.exports = React.createClass({
   render: function() {
     var queryParam = parseQueryString(window.location.search);
-    var mode = (queryParam["mode"] ? parseInt(queryParam["mode"]) : 0);
+    var mode = ("mode" in queryParam ? queryParam["mode"] : "default");
 
-    switch (mode) {
-    case 0: break;
-    case 1: return (<DetailPage />);
-    case 2:
-      var personListModel = {values: [{id: 1, name: "Alice"}, {id: 2, name: "Bob"}]};
-      return (<PersonHintsPage personList={personListModel} />);
-    default:
-      return (<div><p><span className="label label-danger">Danger</span>&nbsp;Mode is too big</p></div>);
+    if (mode == "1") {
+      return (<DetailPage />);
+    } else if (mode == "2") {
+      var model = [{id: 1, name: "Alice"}, {id: 2, name: "Bob"}];
+      return (<PersonHintsPage personList={model} />);
+    } else if (mode == "3") {
+      var model = ["Ba", "Be", "Bo"];
+      return (<PersonHintsPage nameParts={model} />);
     }
 
     return (

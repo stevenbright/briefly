@@ -21,6 +21,15 @@ body {
 }
 
 
+
+/* Named Value Element (see coded-named-item) */
+
+.named-value-elem {
+  padding: 0.5em;
+  display: inline-block;
+}
+
+
 /* Favorites */
 
 .j-fav-link .star {

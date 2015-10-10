@@ -3,15 +3,6 @@ var React = require('React');
 var StarRating = require('../common/star-rating.js');
 
 module.exports = React.createClass({
-//  getInitialState: function() {
-//    return {
-//      model: {
-//        author: {name: "Edward Morrison"},
-//        date: 1444015490433,
-//        brief: "An interesting story about second life of Jack"
-//      }
-//    };
-//  },
 
   render: function() {
     var m = this.props.model;
