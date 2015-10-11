@@ -2,6 +2,10 @@ var React = require('React');
 
 module.exports = React.createClass({
   render: function () {
+    // Sample item: {id: 1000, name: "A Christmas Carol", type: "book"}
+    var item = this.props.item;
+    var href = "#/item/" + item.type + "/" + item.id; // TODO: detail page?
+
     return (
       <span className="item-sep">
         <span className="prepended-divider">,&nbsp;</span>
