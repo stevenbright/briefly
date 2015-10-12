@@ -7,8 +7,7 @@ module.exports = React.createClass({
     var href = "#/item/" + item.type + "/" + item.id; // TODO: detail page?
 
     return (
-      <span className="item-sep">
-        <span className="prepended-divider">,&nbsp;</span>
+      <span className="inline-item">
         <a href={this.props.itemNavUrl} title={this.props.item.name}>{this.props.item.name}</a>
       </span>
     );

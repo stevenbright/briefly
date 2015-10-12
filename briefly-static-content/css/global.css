@@ -22,6 +22,23 @@ body {
 
 
 
+/* Related Items, see generic-list-item-view */
+
+.related-items {
+  border-radius: 0.2em;
+  margin-right: 1.1em;
+}
+
+.related-items-header {
+  font-weight: bold;
+}
+
+/* Inline Item, see inline-named-item */
+
+.inline-item {
+  padding-left: 0.3em;
+}
+
 /* Named Value Element (see coded-named-item) */
 
 .named-value-elem {
