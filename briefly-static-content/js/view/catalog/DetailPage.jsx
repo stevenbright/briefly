@@ -1,7 +1,7 @@
 var React = require('React');
 
-var RetellSmallItem = require('./retell-small-item.js');
-var FavStar = require('../common/fav-star.js');
+var RetellReferenceItem = require('../retell/RetellReferenceItem');
+var FavStar = require('../common/FavStar');
 
 module.exports = React.createClass({
   render: function() {
@@ -88,8 +88,8 @@ module.exports = React.createClass({
           <h2>Retells</h2>
           <hr/>
           <div>
-            <RetellSmallItem model={retellItem1} />
-            <RetellSmallItem model={retellItem2} />
+            <RetellReferenceItem model={retellItem1} />
+            <RetellReferenceItem model={retellItem2} />
           </div>
         </div>
       </div>

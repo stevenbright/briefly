@@ -1,8 +1,8 @@
 var React = require('React');
 
-var Dispatcher = require('./view/dispatcher.js');
-var BrieflyService = require('./service/ajax-briefly-service.js').BrieflyService;
-var parseQueryString = require('./util/uri.js').parseQueryString;
+var Dispatcher = require('./view/Dispatcher');
+var BrieflyService = require('./service/AjaxBrieflyService');
+var parseQueryString = require('./util/uri').parseQueryString;
 var cache = require('rsvp-cache');
 var ajax = require('rsvp-ajax');
 

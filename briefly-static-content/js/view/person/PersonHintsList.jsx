@@ -1,5 +1,5 @@
 var React = require('React');
-var PersonList = require('./person-list.js');
+var PersonList = require('./PersonList');
 
 module.exports = React.createClass({
   render: function() {

@@ -1,7 +1,7 @@
 var React = require('React');
 
-var FavStar = require('../common/fav-star.js');
-var InlineNamedItem = require('../common/inline-named-item.js');
+var FavStar = require('../common/FavStar');
+var InlineCatalogItem = require('../catalog/InlineCatalogItem');
 
 module.exports = React.createClass({
 
@@ -20,11 +20,14 @@ module.exports = React.createClass({
       }
 
       var relatedEntriesUi = item.relatedItems[relationKey].map(function (relatedItem) {
-        return (<InlineNamedItem key={relatedItem.id} item={relatedItem} />);
+        return (<InlineCatalogItem key={relatedItem.id} item={relatedItem} />);
       });
 
       relatedItemElementsUi.push(
-        <span className="related-items"><span className="related-items-header">{relationKey}&nbsp;</span>{relatedEntriesUi}</span>
+        <span key={relationKey} className="related-items">
+          <span className="related-items-header">{relationKey}&nbsp;</span>
+          {relatedEntriesUi}
+        </span>
       );
     }
 

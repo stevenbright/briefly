@@ -22,7 +22,7 @@ body {
 
 
 
-/* Related Items, see generic-list-item-view */
+/* Related Items, see DetailPage */
 
 .related-items {
   border-radius: 0.2em;
@@ -33,13 +33,25 @@ body {
   font-weight: bold;
 }
 
-/* Inline Item, see inline-named-item */
+/* CatalogList */
+
+ul.catalog-list {
+  list-style: none outside none;
+  padding: 0;
+}
+
+ul.catalog-list li {
+  border-top: 1px solid #eee;
+  padding-bottom: 1em;
+}
+
+/* Inline Item, see InlineCatalogItem */
 
 .inline-item {
   padding-left: 0.3em;
 }
 
-/* Named Value Element (see coded-named-item) */
+/* Named Value Element (see InlineCatalogItemWithId) */
 
 .named-value-elem {
   padding: 0.5em;

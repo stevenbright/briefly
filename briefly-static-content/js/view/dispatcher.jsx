@@ -3,9 +3,9 @@ var Router = require('director').Router;
 
 // widgets
 
-var StorefrontPage = require('./storefront/storefront-page.js');
-var AboutPage = require('./about/about-page.js');
-var DemoPage = require('./demo/demo-page.js');
+var StorefrontPage = require('./storefront/StorefrontPage');
+var AboutPage = require('./about/AboutPage');
+var DemoPage = require('./demo/DemoPage');
 
 // navigation IDs
 

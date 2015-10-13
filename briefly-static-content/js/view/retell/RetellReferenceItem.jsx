@@ -1,6 +1,6 @@
 var React = require('React');
 
-var StarRating = require('../common/star-rating.js');
+var StarRating = require('../common/StarRating');
 
 module.exports = React.createClass({
 
