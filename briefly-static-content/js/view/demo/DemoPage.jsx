@@ -3,12 +3,26 @@ var React = require('React');
 // page to be demo'ed:
 var DetailPage = require('../catalog/DetailPage');
 var CatalogList = require('../catalog/CatalogList');
+var GenericCatalogItemDetails = require('../catalog/GenericCatalogItemDetails');
 
 var PersonHintsList = require('../person/PersonHintsList');
 
 // parsing query
 var parseQueryString = require('../../util/uri.js').parseQueryString;
 
+
+var DemoData = {
+  FAR_RAINBOW: {
+    id: 3097,
+    name: "Far Rainbow",
+    type: "book",
+    relatedItems: {
+      author: [{id: 1052, name: "Arkady Strugatsky", type: "person"}, {id: 1053, name: "Boris Strugatsky", type: "person"}],
+      language: [{id: 11, name: "ru", type: "language"}],
+      genre: [{id: 98710, name: "fiction", type: "genre"}]
+    }
+  }
+};
 
 module.exports = React.createClass({
   render: function() {
@@ -36,18 +50,21 @@ module.exports = React.createClass({
             genre: [{id: 98710, name: "fiction", type: "genre"}, {id: 40125, name: "classic", type: "genre"}]
           }
         },
+        DemoData.FAR_RAINBOW,
         {
-          id: 3097,
-          name: "Far Rainbow",
+          id: 3078,
+          name: "Spanish-Chinese Dictionary",
           type: "book",
           relatedItems: {
-            author: [{id: 1052, name: "Arkady Strugatsky", type: "person"}, {id: 1053, name: "Boris Strugatsky", type: "person"}],
-            language: [{id: 11, name: "ru", type: "language"}],
-            genre: [{id: 98710, name: "fiction", type: "genre"}]
+            author: [{id: 6512, name: "Miguel De Cervantes", type: "person"}],
+            language: [{id: 31, name: "es", type: "language"}, {id: 45, name: "cn", type: "language"}],
+            genre: [{id: 97142, name: "dictionary", type: "genre"}]
           }
         }
       ];
       return <CatalogList items={model} />;
+    } else if (mode == "5") {
+      return (<GenericCatalogItemDetails isFavorite={true} item={DemoData.FAR_RAINBOW} />);
     }
 
     return (

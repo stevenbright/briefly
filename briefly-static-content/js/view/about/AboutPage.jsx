@@ -6,7 +6,7 @@ module.exports = React.createClass({
       <div className="container">
         <h2>Briefly Admin Console</h2>
         <hr/>
-        <p>&copy; Alexander Shabanov, 2015</p>
+        <p>&copy; Alex, 2015</p>
       </div>
     );
   }

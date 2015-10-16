@@ -45,6 +45,16 @@ ul.catalog-list li {
   padding-bottom: 1em;
 }
 
+/* GenericCatalogItemDetails */
+
+table.item-info > tbody > tr > td {
+  padding: 0.5em;
+}
+
+table.item-info > tbody > tr > td:first-child {
+  font-weight: bold;
+}
+
 /* Inline Item, see InlineCatalogItem */
 
 .inline-item {
