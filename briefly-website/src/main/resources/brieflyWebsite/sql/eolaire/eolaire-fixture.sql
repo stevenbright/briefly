@@ -7,6 +7,7 @@ INSERT INTO entity_type (id, name) VALUES (3, 'person');
 INSERT INTO entity_type (id, name) VALUES (5, 'book');
 INSERT INTO entity_type (id, name) VALUES (6, 'movie');
 INSERT INTO entity_type (id, name) VALUES (7, 'series');
+INSERT INTO entity_type (id, name) VALUES (8, 'genre');
 
 INSERT INTO item (id, name, type_id) VALUES (150, 'en', 2);
 INSERT INTO item (id, name, type_id) VALUES (151, 'ru', 2);
@@ -30,6 +31,16 @@ INSERT INTO item_profile (item_id, description, date_created, date_updated, flag
 
 INSERT INTO item_profile (item_id, description, date_created, date_updated, flags)
   VALUES (1001, 'Another Fine Author', '2015-05-28 09:13:19 UTC', '2015-05-28 11:16:34 UTC', 1);
+
+
+--
+-- What relations can be fetched for a given item?
+--
+
+INSERT INTO item_list_relations (item_type_id, relation_type_id) VALUES (5, 1); -- book -> author
+INSERT INTO item_list_relations (item_type_id, relation_type_id) VALUES (5, 2); -- book -> language
+INSERT INTO item_list_relations (item_type_id, relation_type_id) VALUES (5, 7); -- book -> series
+INSERT INTO item_list_relations (item_type_id, relation_type_id) VALUES (5, 8); -- book -> genre
 
 COMMIT;
 

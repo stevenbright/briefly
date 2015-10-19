@@ -39,6 +39,19 @@ CREATE TABLE item_profile (
 );
 
 --
+-- Tables for ad-hoc queries
+--
+
+-- This table identifies what kind of relations should be fetched for a given entity_type
+CREATE TABLE item_list_relations (
+  item_type_id      INTEGER NOT NULL,
+  relation_type_id  INTEGER NOT NULL,
+  CONSTRAINT pk_item_list_relations PRIMARY KEY (item_type_id, relation_type_id),
+  CONSTRAINT fk_item_list_relations_item_type FOREIGN KEY (item_type_id) REFERENCES entity_type(id) ON DELETE CASCADE,
+  CONSTRAINT fk_item_list_relations_relation_type FOREIGN KEY (relation_type_id) REFERENCES entity_type(id) ON DELETE CASCADE
+);
+
+--
 -- Sequences
 --
 

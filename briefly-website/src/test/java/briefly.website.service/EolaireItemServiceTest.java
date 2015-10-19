@@ -1,5 +1,6 @@
 package briefly.website.service;
 
+import briefly.website.model.RelationsFilterMode;
 import com.truward.orion.eolaire.model.EolaireModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ public final class EolaireItemServiceTest {
 
   private final List<EolaireModel.EntityType> actualEntityTypes = Collections.unmodifiableList(Arrays.asList(
       entityType(1, "author"), entityType(2, "language"), entityType(3, "person"), entityType(5, "book"),
-      entityType(6, "movie"), entityType(7, "series")));
+      entityType(6, "movie"), entityType(7, "series"), entityType(8, "genre")));
 
   @Resource EolaireItemService itemService;
 
@@ -117,18 +118,34 @@ public final class EolaireItemServiceTest {
   }
 
   @Test
-  public void shouldGetRelations() {
-    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L);
-    assertEquals(Collections.singletonList(EolaireModel.ItemRelation.newBuilder()
-        .setRelationTypeId(7)
-        .setTargetItemId(1100)
-        .setMetadata(EolaireModel.Metadata.newBuilder().build())
-        .build()), relations);
+  public void shouldGetAllRelations() {
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L, RelationsFilterMode.ALL);
+    assertEquals(Collections.singletonList(rel(1100, 7)), relations);
+  }
+
+  @Test
+  public void shouldGetNonEmptyItemListRelations() {
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1100L, RelationsFilterMode.ITEM_LIST);
+    assertEquals(Arrays.asList(rel(151, 2), rel(1000, 1), rel(1001, 1)), relations);
+  }
+
+  @Test
+  public void shouldGetEmptyItemListRelations() {
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L, RelationsFilterMode.ITEM_LIST);
+    assertEquals(Collections.emptyList(), relations);
   }
 
   //
   // Private
   //
+
+  private static EolaireModel.ItemRelation rel(long targetItemId, long relationTypeId) {
+    return EolaireModel.ItemRelation.newBuilder()
+        .setRelationTypeId(relationTypeId)
+        .setTargetItemId(targetItemId)
+        .setMetadata(EolaireModel.Metadata.newBuilder().build())
+        .build();
+  }
 
   private static EolaireModel.EntityType entityType(long id, String name) {
     return EolaireModel.EntityType.newBuilder().setId(id).setName(name).build();

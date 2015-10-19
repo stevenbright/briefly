@@ -1,5 +1,6 @@
 package briefly.website.service.support;
 
+import briefly.website.model.RelationsFilterMode;
 import briefly.website.service.EolaireItemService;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.truward.orion.eolaire.model.EolaireModel;
@@ -89,9 +90,22 @@ public class DefaultEolaireItemService implements EolaireItemService {
 
   @Nonnull
   @Override
-  public List<EolaireModel.ItemRelation> getItemRelations(long itemId) {
-    return db.query("SELECT rhs, type_id, metadata FROM item_relation WHERE lhs=? ORDER BY rhs",
-        new ItemRelationRowMapper(), itemId);
+  public List<EolaireModel.ItemRelation> getItemRelations(long itemId, RelationsFilterMode filterMode) {
+    switch (filterMode) {
+      case ALL:
+        return db.query("SELECT rhs, type_id, metadata FROM item_relation WHERE lhs=? ORDER BY rhs",
+            new ItemRelationRowMapper(), itemId);
+
+      case ITEM_LIST:
+        return db.query("SELECT ir.rhs, ir.type_id, ir.metadata FROM item_relation AS ir\n" +
+                "INNER JOIN item AS i ON i.id=ir.lhs\n" +
+                "INNER JOIN item_list_relations AS ilr ON ilr.item_type_id=i.type_id\n" +
+                "WHERE ir.lhs=? AND ilr.relation_type_id=ir.type_id ORDER BY ir.rhs",
+            new ItemRelationRowMapper(), itemId);
+
+      default:
+        throw new UnsupportedOperationException("Unsupported filterMode=" + filterMode + " for itemId=" + itemId);
+    }
   }
 
   //
