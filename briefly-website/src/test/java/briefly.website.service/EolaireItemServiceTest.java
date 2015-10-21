@@ -24,15 +24,15 @@ public final class EolaireItemServiceTest {
 
   private final List<EolaireModel.EntityType> actualEntityTypes = Collections.unmodifiableList(Arrays.asList(
       entityType(1, "author"), entityType(2, "language"), entityType(3, "person"), entityType(5, "book"),
-      entityType(6, "movie"), entityType(7, "series"), entityType(8, "genre")));
+      entityType(6, "movie"), entityType(7, "series"), entityType(8, "genre"), entityType(9, "book_origin")));
 
   @Resource EolaireItemService itemService;
 
   @Test
   public void shouldGetItem() {
-    final EolaireModel.Item item = itemService.getItemById(151);
+    final EolaireModel.Item item = itemService.getItemById(11);
 
-    assertEquals(151, item.getId());
+    assertEquals(11, item.getId());
   }
 
   @Test
@@ -43,27 +43,27 @@ public final class EolaireItemServiceTest {
   @Test
   public void shouldGetItemProfileWithMetadata() {
     assertEquals(Collections.singletonList(EolaireModel.ItemProfile.newBuilder()
-            .setItemId(1000L)
+            .setItemId(1005L)
             .setDescription("Fine Author")
             .setCreated(1432762974000L)
             .setUpdated(1432811825000L)
             .setFlags(1)
             .setMetadata(EolaireModel.Metadata.newBuilder().build())
             .build()),
-        itemService.getItemProfile(1000L));
+        itemService.getItemProfile(1005L));
   }
 
   @Test
   public void shouldGetItemProfileWithoutMetadata() {
     assertEquals(Collections.singletonList(EolaireModel.ItemProfile.newBuilder()
-            .setItemId(1001L)
+            .setItemId(1006L)
             .setDescription("Another Fine Author")
             .setCreated(1432804399000L)
             .setUpdated(1432811794000L)
             .setFlags(1)
             .setMetadata(EolaireModel.Metadata.newBuilder().build())
             .build()),
-        itemService.getItemProfile(1001L));
+        itemService.getItemProfile(1006L));
   }
 
   @Test
@@ -101,32 +101,32 @@ public final class EolaireItemServiceTest {
 
   @Test
   public void shouldGetItemIdsByRelationUsingItemId() {
-    final List<Long> ids = itemService.getItemIdsByRelation(1000L, null, null, null, 10);
+    final List<Long> ids = itemService.getItemIdsByRelation(1005L, null, null, null, 10);
     assertEquals(Collections.singletonList(1100L), ids);
   }
 
   @Test
   public void shouldGetItemIdsByRelationUsingItemIdAndRelationTypeId() {
-    final List<Long> ids = itemService.getItemIdsByRelation(1000L, 1L, null, null, 10);
+    final List<Long> ids = itemService.getItemIdsByRelation(1005L, 1L, null, null, 10);
     assertEquals(Collections.singletonList(1100L), ids);
   }
 
   @Test
   public void shouldGetItemIdsByRelationUsingItemIdAndRelationTypeIdAndRelatedItemTypeId() {
-    final List<Long> ids = itemService.getItemIdsByRelation(1000L, 1L, 5L, null, 10);
+    final List<Long> ids = itemService.getItemIdsByRelation(1005L, 1L, 5L, null, 10);
     assertEquals(Collections.singletonList(1100L), ids);
   }
 
   @Test
   public void shouldGetAllRelations() {
-    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L, RelationsFilterMode.ALL);
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(81L, RelationsFilterMode.ALL);
     assertEquals(Collections.singletonList(rel(1100, 7)), relations);
   }
 
   @Test
   public void shouldGetNonEmptyItemListRelations() {
     final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1100L, RelationsFilterMode.ITEM_LIST);
-    assertEquals(Arrays.asList(rel(151, 2), rel(1000, 1), rel(1001, 1)), relations);
+    assertEquals(Arrays.asList(rel(12, 2), rel(1005, 1), rel(1006, 1)), relations);
   }
 
   @Test
