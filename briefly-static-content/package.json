@@ -1,25 +1,61 @@
 {
-  "name": "briefly-website-static-content",
+  "name": "briefly-static-content",
   "version": "1.0.0",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "jest-cli": "^0.4.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-browserify": "^3.6.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-uglify": "^0.8.0",
+
+  "author": "Alex Shabanov",
+
+  "main": "js/main.js",
+
+  "dependencies": {
     "bootstrap": "^3.0.0",
     "director": "^1.2.8",
+
     "rsvp": "^3.0.0",
     "rsvp-ajax": "1.0.2",
     "rsvp-cache": "^1.0.0",
-    "react": "^0.13.0",
-    "grunt-react": "^0.12.0"
+
+    "react": "^0.13.3"
   },
+
+  "devDependencies": {
+    "jest-cli": "^0.4.3",
+
+    "babelify": "^6.1.3",
+    "browserify": "^6.2.0",
+    "envify": "^3.0.0",
+    "reactify": "^0.15.2",
+    "uglify-js": "~2.4.15",
+    "watchify": "^2.1.1",
+
+    "http-server": "^0.8.4"
+  },
+
   "scripts": {
     "test": "jest"
+  },
+
+  "browserify": {
+    "transform": [
+      ["babelify", { "stage": 0 }],
+      "envify"
+    ]
+  },
+
+  "jest": {
+    "rootDir": "",
+
+    "modulePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+
+    "preprocessorIgnorePatterns": [
+      "/node_modules/"
+    ],
+
+    "testPathDirs": [
+      "<rootDir>/js"
+    ],
+
+    "scriptPreprocessor": "./node_modules/babel-jest"
   }
 }

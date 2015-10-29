@@ -29,19 +29,13 @@
             <phase>generate-sources</phase>
             <configuration>
               <tasks>
-                <!-- install/update npm plugins -->
-                <exec executable="npm">
-                  <arg value="install"/>
-                  <arg value="--save-dev"/>
-                </exec>
-
                 <!-- clean existing artifacts, if any -->
-                <exec executable="./node_modules/grunt-cli/bin/grunt">
+                <exec executable="make">
                   <arg value="clean"/>
                 </exec>
 
                 <!-- build all -->
-                <exec executable="./node_modules/grunt-cli/bin/grunt"/>
+                <exec executable="make"/>
               </tasks>
             </configuration>
             <goals>
