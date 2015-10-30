@@ -1,10 +1,10 @@
-var React = require('react');
+import React from 'react';
 
-var Dispatcher = require('./view/ViewDispatcher.react');
-var BrieflyService = require('./service/AjaxBrieflyService');
-var parseQueryString = require('./util/uri').parseQueryString;
-var cache = require('rsvp-cache');
-var ajax = require('rsvp-ajax');
+import ViewDispatcher from './view/ViewDispatcher.react';
+
+import {parseQueryString} from './util/uri';
+import cache from 'rsvp-cache';
+import ajax from 'rsvp-ajax';
 
 
 function installDebugHooks() {
@@ -28,15 +28,10 @@ function installDebugHooks() {
 }
 
 window.onload = function () {
-  var services = {
-    brieflyService: new BrieflyService()
-  };
-
-  var queryParam = parseQueryString(window.location.search);
+  const queryParam = parseQueryString(window.location.search);
   if (queryParam["debug"] === "1") {
     installDebugHooks();
   }
 
-  React.render(React.createElement(Dispatcher, {services: services}),
-    document.getElementById('main-content'));
+  React.render(React.createElement(ViewDispatcher), document.getElementById('main-content'));
 }

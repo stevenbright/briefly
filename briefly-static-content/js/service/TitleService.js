@@ -1,6 +1,9 @@
 
+class TitleService {
 
-function TitleService() {
-}
+  setTitle(pageNamePart: string): void {
+    document.title = "Briefly \u00BB " + pageNamePart;
+  }
+};
 
-module.exports = TitleService;
+export default new TitleService();

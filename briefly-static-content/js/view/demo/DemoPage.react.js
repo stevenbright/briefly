@@ -10,21 +10,9 @@ var PersonHintsList = require('../person/PersonHintsList.react');
 // parsing query
 var parseQueryString = require('../../util/uri.js').parseQueryString;
 
-import CatalogItem from "../../model/catalog/Item";
+import CatalogItem from '../../model/catalog/Item';
 
-
-var DemoData = {
-  FAR_RAINBOW: {
-    id: 3097,
-    name: "Far Rainbow",
-    type: "book",
-    relatedItems: {
-      author: [{id: 1052, name: "Arkady Strugatsky", type: "person"}, {id: 1053, name: "Boris Strugatsky", type: "person"}],
-      language: [{id: 11, name: "ru", type: "language"}],
-      genre: [{id: 98710, name: "fiction", type: "genre"}]
-    }
-  }
-};
+import DemoData from '../../service/DemoData';
 
 module.exports = React.createClass({
   render: function() {
@@ -34,37 +22,11 @@ module.exports = React.createClass({
     if (mode == "1") {
       return (<DetailPage />);
     } else if (mode == "2") {
-      var model = [{id: 1, name: "Alice"}, {id: 2, name: "Bob"}, {id: 3, name: "Cavin"}, {id: 4, name: "Eva"}];
-      return (<PersonHintsList personList={model} />);
+      return (<PersonHintsList personList={DemoData.NAMES_1} />);
     } else if (mode == "3") {
-      var model = ["Ba", "Be", "Bo"];
-      return (<PersonHintsList nameParts={model} />);
+      return (<PersonHintsList nameParts={DemoData.NAME_HINTS_1} />);
     } else if (mode == "4") {
-      var model = [
-        {
-          id: 1029,
-          name: "A Christmas Carol",
-          type: "book",
-          relatedItems: {
-            author: [{id: 5097, name: "Charles Dickens", type: "person"}],
-            illustrator: [{id: 6970, name: "Sam Golding", type: "person"}, {id: 7041, name: "George Irwing", type: "person"}],
-            language: [{id: 12, name: "en", type: "language"}],
-            genre: [{id: 98710, name: "fiction", type: "genre"}, {id: 40125, name: "classic", type: "genre"}]
-          }
-        },
-        DemoData.FAR_RAINBOW,
-        {
-          id: 3078,
-          name: "Spanish-Chinese Dictionary",
-          type: "book",
-          relatedItems: {
-            author: [{id: 6512, name: "Miguel De Cervantes", type: "person"}],
-            language: [{id: 31, name: "es", type: "language"}, {id: 45, name: "cn", type: "language"}],
-            genre: [{id: 97142, name: "dictionary", type: "genre"}]
-          }
-        }
-      ];
-      return <CatalogList items={model} />;
+      return <CatalogList items={DemoData.CATALOG_LIST} />;
     } else if (mode == "5") {
       return (<GenericCatalogItemDetails isFavorite={true} item={DemoData.FAR_RAINBOW} />);
     }

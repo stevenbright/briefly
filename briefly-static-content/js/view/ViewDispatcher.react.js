@@ -1,104 +1,78 @@
-var React = require('react');
-var Router = require('director').Router;
+
+'use strict';
+
+import React, {Component} from 'react';
+import {Router} from 'director';
 
 // widgets
 
-var StorefrontPage = require('./storefront/StorefrontPage.react');
-var AboutPage = require('./about/AboutPage.react');
-var DemoPage = require('./demo/DemoPage.react');
+import StorefrontPage from './storefront/StorefrontPage.react';
+import AboutPage from './about/AboutPage.react';
+import DemoPage from './demo/DemoPage.react';
+
+import TitleService from '../service/TitleService';
 
 // navigation IDs
 
-var Nav = {
-  UNDEFINED: "UNDEFINED",
-
-  STOREFRONT: "STOREFRONT",
-
-  DEMO: "DEMO",
-
-  ABOUT: "ABOUT"
+const Nav = {
+  UNDEFINED:    "UNDEFINED",
+  STOREFRONT:   "STOREFRONT",
+  DEMO:         "DEMO",
+  ABOUT:        "ABOUT"
 };
 
-function setStartTitle(pageNamePart) {
-  if (pageNamePart != null) {
-    document.title = "Briefly \u00BB " + pageNamePart;
-    return;
+
+type State = {
+  // current widget
+  nowShowing: string,
+
+  // controller variables
+  offsetToken: ?number,
+  limit: ?number
+};
+
+export default class ViewDispatcher extends Component<{}, {}, State> {
+  state = {
+    nowShowing: Nav.UNDEFINED,
+
+    offsetToken: undefined,
+    limit: undefined
   }
 
-  document.title = "Briefly \u00BB Loading...";
-}
-
-var TitleService = {
-  setTitle: setStartTitle
-}
-
-module.exports = React.createClass({
-  getInitialState: function () {
-    var services = { titleService: TitleService };
-    for (var serviceKey in this.props.services) {
-      services[serviceKey] = this.props.services[serviceKey];
-    }
-
-    return {
-      services: services,
-
-      nowShowing: Nav.UNDEFINED, // current widget
-
-      // controller variables
-
-      type: undefined,
-      offsetToken: undefined,
-      limit: undefined
-    };
-  },
-
-  componentDidMount: function () {
-    var gotoStorefrontPage = this.setState.bind(this, {nowShowing: Nav.STOREFRONT});
-    var gotoAboutPage = this.setState.bind(this, {nowShowing: Nav.ABOUT});
+  componentDidMount(): void {
+    const gotoStorefrontPage = this.setState.bind(this, {nowShowing: Nav.STOREFRONT});
+    const gotoAboutPage = this.setState.bind(this, {nowShowing: Nav.ABOUT});
 
     // TODO: disable in prod
-    var gotoDemoPage = this.setState.bind(this, {nowShowing: Nav.DEMO});
+    const gotoDemoPage = this.setState.bind(this, {nowShowing: Nav.DEMO});
 
-    var router = Router({
+    const router = Router({
       '/storefront': gotoStorefrontPage,
       '/demo': gotoDemoPage,
       '/about': gotoAboutPage
     });
 
     router.init('/storefront');
-  },
+  }
 
-  render: function() {
+  render(): ?ReactElement {
     switch (this.state.nowShowing) {
-      case Nav.UNDEFINED: // happens once on loading
-        setStartTitle("Main");
-        return (<div/>);
-
       case Nav.STOREFRONT:
-        setStartTitle("Storefront");
-        return (<StorefrontPage services={this.state.services}/>);
-
-      case Nav.ITEM_BY_TYPE_LIST:
-        setStartTitle("Items");
-        return (<ItemByTypeListPage
-                  services={this.state.services}
-                  type={this.state.type}
-                  offsetToken={this.state.offsetToken}
-                  limit={this.state.limit}
-                  />);
+        TitleService.setTitle("Storefront");
+        return (<StorefrontPage />);
 
       case Nav.ABOUT:
-        setStartTitle("About");
+        TitleService.setTitle("About");
         return (<AboutPage />);
 
       case Nav.DEMO: // should be inactive in prod
-        setStartTitle("Demo");
+        TitleService.setTitle("Demo");
         return (<DemoPage />);
 
       default:
-        setStartTitle();
-        return (<EntityListPage services={this.state.services}/>);
+        TitleService.setTitle("Loading...");
+        return (<div/>);
     }
   }
-});
+}
 
