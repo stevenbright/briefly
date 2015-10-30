@@ -10,6 +10,8 @@ var PersonHintsList = require('../person/PersonHintsList.react');
 // parsing query
 var parseQueryString = require('../../util/uri.js').parseQueryString;
 
+import CatalogItem from "../../model/catalog/Item";
+
 
 var DemoData = {
   FAR_RAINBOW: {
@@ -69,7 +71,13 @@ module.exports = React.createClass({
 
     return (
       <div className="container">
-        <tt>Unknown Demo Page &lt;Draft&gt;</tt>
+        <ul>
+          <li><a href="/?mode=1#/demo">Detail Page</a></li>
+          <li><a href="/?mode=2#/demo">Person Names List</a></li>
+          <li><a href="/?mode=3#/demo">Person Hints List</a></li>
+          <li><a href="/?mode=4#/demo">Catalog List</a></li>
+          <li><a href="/?mode=5#/demo">Generic Catalog Item Details</a></li>
+        </ul>
       </div>
     );
   }
