@@ -1,7 +1,7 @@
-var React = require('react');
+import React from 'react';
 
-var FavStar = require('../common/FavStar.react');
-var InlineCatalogItem = require('../catalog/InlineCatalogItem.react');
+import FavStar from '../common/FavStar.react';
+import InlineCatalogItem from '../catalog/InlineCatalogItem.react';
 
 module.exports = React.createClass({
   render: function() {

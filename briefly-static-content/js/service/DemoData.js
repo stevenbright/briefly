@@ -3,6 +3,8 @@
 
 import Immutable from "immutable";
 
+//import
+
 // Helper functions
 
 function person(id, name) {
@@ -53,7 +55,7 @@ export default {
     }
   ],
 
-  NAMES_1: [person(1, "Alice"), person(2, "Bob"), person(3, "Catherine"), person(4, "Edward")],
+  NAMES_1: Immutable.List.of(person(12, "Al"), person(1, "Alice"), person(2, "Bob"), person(3, "Catherine"), person(4, "Edward")),
 
-  NAME_HINTS_1: ["Ba", "Be", "Bo"]
+  NAME_HINTS_1: Immutable.List.of("Ba", "Be", "Bo", "Bu")
 }
