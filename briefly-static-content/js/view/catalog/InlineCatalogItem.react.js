@@ -8,13 +8,10 @@ type Props = {
   item: CatalogItem,
 };
 
-type State = {
-  // nothing
-};
+type State = {};
 
 export default class InlineCatalogItem extends Component<{}, Props, State> {
-  state = {}
-
+  //state = {}
   render(): ?ReactElement {
     // Sample item: {id: 1000, name: "A Christmas Carol", type: "book"}
     const item = this.props.item;
