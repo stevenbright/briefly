@@ -3,12 +3,14 @@
 
 import Immutable from "immutable";
 
+import CatalogItem from '../model/catalog/Item';
+
 //import
 
 // Helper functions
 
 function person(id, name) {
-  return {id, name, type: "person"}
+  return new CatalogItem({id, name, type: "person"});
 }
 
 // Demo data
