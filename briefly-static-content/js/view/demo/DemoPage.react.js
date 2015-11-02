@@ -1,30 +1,31 @@
-var React = require('react');
+'use strict';
+
+import React, {Component} from 'react';
 
 // page to be demo'ed:
-var DetailPage = require('../catalog/DetailPage.react');
-var CatalogList = require('../catalog/CatalogList.react');
-var GenericCatalogItemDetails = require('../catalog/GenericCatalogItemDetails.react');
+import DetailPage from '../catalog/DetailPage.react';
+import CatalogList from '../catalog/CatalogList.react';
+import GenericCatalogItemDetails from '../catalog/GenericCatalogItemDetails.react';
 
-var PersonHintsList = require('../person/PersonHintsList.react');
+import ItemHintsOrList from '../catalog/ItemHintsOrList.react';
 
 // parsing query
-var parseQueryString = require('../../util/uri.js').parseQueryString;
+import {parseQueryString} from '../../util/uri.js';
 
 import CatalogItem from '../../model/catalog/Item';
-
 import DemoData from '../../service/DemoData';
 
-module.exports = React.createClass({
-  render: function() {
-    var queryParam = parseQueryString(window.location.search);
-    var mode = ("mode" in queryParam ? queryParam["mode"] : "default");
+export default class DemoPage extends Component<{}, Props, State> {
+  render(): ?ReactElement {
+    const queryParam = parseQueryString(window.location.search);
+    const mode = ("mode" in queryParam ? queryParam["mode"] : "default");
 
     if (mode == "1") {
       return (<DetailPage />);
     } else if (mode == "2") {
-      return (<PersonHintsList personList={DemoData.NAMES_1} />);
+      return (<ItemHintsOrList elementType='person' itemList={DemoData.NAMES_1} />);
     } else if (mode == "3") {
-      return (<PersonHintsList nameParts={DemoData.NAME_HINTS_1} />);
+      return (<ItemHintsOrList elementType='person' nameParts={DemoData.NAME_HINTS_1} />);
     } else if (mode == "4") {
       return <CatalogList items={DemoData.CATALOG_LIST} />;
     } else if (mode == "5") {
@@ -43,5 +44,5 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}
 
