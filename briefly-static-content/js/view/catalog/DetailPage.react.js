@@ -59,7 +59,7 @@ module.exports = React.createClass({
     var atf = (
       <div className="row">
         <div className="col-md-3">
-          <FavStar id={this.props.personId} type='person' isFavorite={false}/>
+          <FavStar id={this.props.personId} type='person' isFavorite={true}/>
           {media}
         </div>
         <div className="col-md-7">

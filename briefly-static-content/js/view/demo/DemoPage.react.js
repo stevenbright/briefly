@@ -15,7 +15,7 @@ import {parseQueryString} from '../../util/uri.js';
 import CatalogItem from '../../model/catalog/Item';
 import DemoData from '../../service/DemoData';
 
-export default class DemoPage extends Component<{}, Props, State> {
+export default class DemoPage extends Component<{}, {}, {}> {
   render(): ?ReactElement {
     const queryParam = parseQueryString(window.location.search);
     const mode = ("mode" in queryParam ? queryParam["mode"] : "default");
