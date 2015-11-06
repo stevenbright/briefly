@@ -21,15 +21,15 @@ export default class DemoPage extends Component<{}, {}, {}> {
     const mode = ("mode" in queryParam ? queryParam["mode"] : "default");
 
     if (mode == "1") {
-      return (<DetailPage />);
+      return <DetailPage />;
     } else if (mode == "2") {
-      return (<ItemHintsOrList elementType='person' itemList={DemoData.NAMES_1} />);
+      return <ItemHintsOrList elementType='person' itemList={DemoData.NAMES_1} />;
     } else if (mode == "3") {
-      return (<ItemHintsOrList elementType='person' nameParts={DemoData.NAME_HINTS_1} />);
+      return <ItemHintsOrList elementType='person' nameParts={DemoData.NAME_HINTS_1} />;
     } else if (mode == "4") {
       return <CatalogList items={DemoData.CATALOG_LIST} />;
     } else if (mode == "5") {
-      return (<GenericCatalogItemDetails isFavorite={true} item={DemoData.FAR_RAINBOW} />);
+      return <GenericCatalogItemDetails isFavorite={true} item={DemoData.FAR_RAINBOW} />;
     }
 
     return (
