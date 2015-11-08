@@ -38,6 +38,15 @@
           <li class="nav-divider"></li>
           <li><a href="/g/logout">Logout</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <#if userAccount??>
+              <a href="#" class="navbar-nav pull-right">${userAccount.username}</a>
+            <#else>
+              <a href="/g/login" class="navbar-nav pull-right">Login</a>
+            </#if>
+          </li>
+        </ul>
       </div> <#-- /.navbar-collapse -->
     </div> <#-- /.container -->
   </nav>

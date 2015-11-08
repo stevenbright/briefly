@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Alexander Shabanov
@@ -38,5 +40,11 @@ public interface SecurityControllerMixin {
           "part of account=" + account);
     }
     return id;
+  }
+
+  default Map<String, Object> newMapWithAccount() {
+    final Map<String, Object> result = new HashMap<>();
+    result.put("userAccount", getUserAccount());
+    return result;
   }
 }

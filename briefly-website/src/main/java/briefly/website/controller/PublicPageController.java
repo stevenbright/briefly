@@ -17,20 +17,22 @@ import java.util.Map;
 public final class PublicPageController implements SecurityControllerMixin {
 
   @RequestMapping("/index")
-  public String index() {
-    return "page/index";
+  public ModelAndView index() {
+    final Map<String, Object> params = newMapWithAccount();
+    return new ModelAndView("page/index", params);
   }
 
   @RequestMapping("/articles")
   public ModelAndView articles() {
-    return new ModelAndView("page/articles", "articles", Collections.emptyList());
+    final Map<String, Object> params = newMapWithAccount();
+    params.put("articles", Collections.emptyList());
+    return new ModelAndView("page/articles", params);
   }
 
   @RequestMapping("/about")
   public ModelAndView about() {
-    final Map<String, Object> params = new HashMap<>();
+    final Map<String, Object> params = newMapWithAccount();
     params.put("userId", hasUserAccount() ? getUserId() : -1L);
-    params.put("userAccount", getUserAccount());
     params.put("currentTime", System.currentTimeMillis());
     return new ModelAndView("page/about", params);
   }
