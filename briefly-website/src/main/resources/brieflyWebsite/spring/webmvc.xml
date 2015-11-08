@@ -9,16 +9,15 @@
 
   <!-- Controllers -->
   <bean class="briefly.website.controller.PublicPageController" autowire="constructor"/>
+  <bean class="briefly.website.controller.rest.EolaireRestController" autowire="constructor"/>
 
   <!-- Annotation driven support for MVC controllers -->
-  <mvc:annotation-driven/>
-
-  <!--<mvc:annotation-driven>-->
-    <!--&lt;!&ndash; custom marshallers &ndash;&gt;-->
-    <!--<mvc:message-converters>-->
-      <!--<bean class="com.truward.brikar.protobuf.http.json.ProtobufJsonHttpMessageConverter" />-->
-    <!--</mvc:message-converters>-->
-  <!--</mvc:annotation-driven>-->
+  <mvc:annotation-driven>
+    <!-- custom marshallers -->
+    <mvc:message-converters>
+      <bean class="com.truward.brikar.protobuf.http.json.ProtobufJsonHttpMessageConverter" />
+    </mvc:message-converters>
+  </mvc:annotation-driven>
 
   <!-- freemarker config -->
   <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">

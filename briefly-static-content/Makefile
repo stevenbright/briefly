@@ -4,7 +4,7 @@ TO			=	target/release/brieflyWebsite/web
 NBIN		= ./node_modules/.bin
 PORT		= 8000
 
-.PHONY: clean browserify libs test watch compile server
+.PHONY: clean browserify libs test watch compile server css
 
 
 # Targets
@@ -34,10 +34,12 @@ browserify: node_modules target js/main.js
 	rm -rf $(TO)/js/bundle.js
 	$(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(TO)/js/bundle.js
 
-compile: libs browserify
+css:
 	mkdir -p $(TO)/css
 	cp -r css/* $(TO)/css
 	cp -r root/* $(TO)/
+
+compile: libs browserify css
 
 test: node_modules target
 	npm test

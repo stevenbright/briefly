@@ -52,31 +52,7 @@ ulimit -n 512
 
 ## Sample Configs
 
-Use sample VM properties:
+Use sample VM properties: ``-Dbrikar.settings.path=file:/home/user/opt/config/briefly.properties``.
 
-``
--Dbrikar.settings.path=file:/home/user/opt/config/briefly.properties
-``
+Use ``core.properties`` as a base.
 
-Use sample properties:
-
-``
-# Make shutdown much faster, server will wait 100 milliseconds before stopping serving
-# pending connections and shutting down
-brikar.settings.gracefulShutdownMillis=100
-
-# Turn off basic auth
-#brikar.dev.disableSecurity=true
-
-# Uncomment to also fetch static content directly from your build folder
-brikar.dev.overrideStaticPath=/home/user/proj/github/briefly/briefly-static-content/target/release/brieflyWebsite/web
-
-# Available modes: local, remote
-# If remote mode is used, it will result in calling UserRestService
-brieflyWebsite.security.mode=local
-
-# Remote bean: UserRestService
-brieflyWebsite.remote.userService.username=testonly
-brieflyWebsite.remote.userService.password=test
-brieflyWebsite.remote.userService.uri=http://127.0.0.1:8080/rest/user
-``

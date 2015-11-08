@@ -1,4 +1,6 @@
 
+'use strict';
+
 class TitleService {
 
   setTitle(pageNamePart: string): void {

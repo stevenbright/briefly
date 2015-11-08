@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 
 // page to be demo'ed:
+import DemoApiView from './DemoApiView.react';
 import DetailPage from '../catalog/DetailPage.react';
 import CatalogList from '../catalog/CatalogList.react';
 import GenericCatalogItemDetails from '../catalog/GenericCatalogItemDetails.react';
@@ -30,6 +31,8 @@ export default class DemoPage extends Component<{}, {}, {}> {
       return <CatalogList items={DemoData.CATALOG_LIST} />;
     } else if (mode == "5") {
       return <GenericCatalogItemDetails isFavorite={true} item={DemoData.FAR_RAINBOW} />;
+    } else if (mode == "api") {
+      return <DemoApiView />;
     }
 
     return (
@@ -40,6 +43,7 @@ export default class DemoPage extends Component<{}, {}, {}> {
           <li><a href="/?mode=3#/demo">Person Hints List</a></li>
           <li><a href="/?mode=4#/demo">Catalog List</a></li>
           <li><a href="/?mode=5#/demo">Generic Catalog Item Details</a></li>
+          <li><a href="/?mode=api#/demo">Demo API</a></li>
         </ul>
       </div>
     );
