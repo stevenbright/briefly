@@ -14,14 +14,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/g/")
-public final class PublicPageController {
-//  private OverviewService articleService;
-//  private CommentService visitorService;
-//
-//  public PublicPageController(OverviewService articleService, CommentService visitorService) {
-//    this.articleService = Objects.requireNonNull(articleService, "articleService");
-//    this.visitorService = Objects.requireNonNull(visitorService, "visitorService");
-//  }
+public final class PublicPageController implements SecurityControllerMixin {
 
   @RequestMapping("/index")
   public String index() {
@@ -34,8 +27,12 @@ public final class PublicPageController {
   }
 
   @RequestMapping("/about")
-  public String about() {
-    return "page/about";
+  public ModelAndView about() {
+    final Map<String, Object> params = new HashMap<>();
+    params.put("userId", hasUserAccount() ? getUserId() : -1L);
+    params.put("userAccount", getUserAccount());
+    params.put("currentTime", System.currentTimeMillis());
+    return new ModelAndView("page/about", params);
   }
 
   @RequestMapping("/login")

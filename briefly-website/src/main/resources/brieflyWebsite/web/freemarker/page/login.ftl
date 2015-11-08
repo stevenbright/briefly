@@ -8,7 +8,7 @@
 <#if loginError??>
 <div class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-  <span class="sr-only">Error:</span>Invalid login or password. Generated at ${currentTime}.
+  <span class="sr-only">Error:</span>Invalid login or password. Generated at ${currentTime?c}.
 </div>
 </#if>
 
@@ -16,6 +16,7 @@
 <div class="row">
   <div class="col-md-3"></div>
   <div class="col-md-6 well">
+
   <form method="POST" action="/j_spring_security_check" class="signin-form">
     <h3>Please Sign In</h3>
 

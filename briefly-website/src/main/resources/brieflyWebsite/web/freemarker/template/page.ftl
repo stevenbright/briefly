@@ -12,7 +12,8 @@
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/app/css/global.css" />
+    <#-- <link rel="stylesheet" type="text/css" href="/assets/app/css/global.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/css/global.css" />
   </head>
   <body>
 
@@ -49,10 +50,10 @@
   </div>
 
   <#-- Vendor Scripts -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+  <#-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script> -->
+  <#-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
   <#-- Custom Page Scripts -->
-  <script type="text/javascript" src="/assets/app/js/app.js"></script>
+  <#-- <script type="text/javascript" src="/assets/app/js/app.js"></script> -->
 </body>
 </html>
 

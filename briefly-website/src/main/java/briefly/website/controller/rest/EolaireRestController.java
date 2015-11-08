@@ -1,5 +1,6 @@
 package briefly.website.controller.rest;
 
+import briefly.website.controller.SecurityControllerMixin;
 import briefly.website.service.EolaireItemService;
 import briefly.website.util.ListQueryUtil;
 import com.truward.brikar.server.controller.AbstractRestController;
@@ -22,7 +23,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/rest/eolaire")
-public final class EolaireRestController extends AbstractRestController implements EolaireRestService {
+public final class EolaireRestController extends AbstractRestController implements EolaireRestService, SecurityControllerMixin {
   private final EolaireItemService itemService;
 
   @Autowired
