@@ -56,7 +56,8 @@ type State = {
 
 export default class DemoApiView extends Component<{}, {}, State> {
   state = {
-    getEntityList: createApiInput()
+    getEntityList: createApiInput(),
+    getEntityListResponseResult: "<PENDING>"
   }
 
   componentDidMount(): void {
@@ -65,15 +66,24 @@ export default class DemoApiView extends Component<{}, {}, State> {
     const p = EolaireService.getEntityList(null, 10);
     p.then(function (data) {
       console.log("getEntityList response", data);
-    })
+      this.setState({getEntityListResponseResult: JSON.stringify(data)});
+    }.bind(this), function (err) {
+      this.setState({getEntityListResponseResult: "<ERROR>"});
+    });
   }
 
   render(): ?ReactElement {
     const getEntityListRequestStr = JSON.stringify(this.state.getEntityListRequest);
 
+    const getEntityListResponseResult = this.state.getEntityListResponseResult;
+
     return (
       <div className="container">
         <p>Demo API View</p>
+        <hr/>
+        <h2>GetEntityList</h2>
+        <p>${getEntityListResponseResult}</p>
+        <hr/>
         <table className="table account-list-table">
           <thead>
             <th>Request</th>

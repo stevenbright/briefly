@@ -4,6 +4,30 @@ body {
     /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+/* React Rater */
+/* TODO: move to separate file (or, better, scss) */
+/* Taken from https://github.com/NdYAG/star-rating/blob/master/star-rating.css */
+
+.star-rating {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  text-align: left;
+  display: inline-block;
+  line-height: normal; }
+  .star-rating a {
+    cursor: pointer;
+    color: #ccc; }
+    .star-rating a:hover {
+      color: #666; }
+      .star-rating a:hover ~ a {
+        color: #666; }
+    .star-rating a.is-active {
+      color: #000 !important; }
+      .star-rating a.is-active ~ a {
+        color: #000; }
+    .star-rating a.is-disabled {
+      color: #ccc !important;
+      cursor: not-allowed; }
 
 /* Sign In Form */
 
