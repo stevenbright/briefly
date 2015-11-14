@@ -4,112 +4,58 @@
 import React, {Component} from 'react';
 import TitleService from '../../service/TitleService';
 import EolaireService from '../../service/EolaireService';
-
+import {Promise} from 'rsvp';
+import ApiConsoleView from '../admin/ApiConsoleView.react';
 
 //
-// ApiInvocationRow
+// Service API model
 //
 
-class ApiInvocationRow extends Component<{},
-  /* Props */{ request: string, lastResponse: string, _onRun: (requestValue: object) => void },
-  /* State */{ requestText: string }> {
-  state = {
-    requestText: this.props.request
-  }
+const EOLAIRE_API_MODEL = [
+  {
+    name: "getEntityList",
+    sampleRequest: {offsetToken: null, limit: 10},
+    call: (request) => EolaireService.getEntityList(request.offsetToken, request.limit)
+  },
 
-  render(): ?ReactElement {
-    return (
-      <tr>
-        <td>
-          <input className="input-xlarge" value={this.state.requestText} onChange={this._requestValueChanged} />
-        </td>
-        <td><button type="button" className="btn btn-default" onClick={this._onExecuteClick}>Execute</button></td>
-        <td>{this.props.lastResponse}</td>
-      </tr>
-    );
-  }
+  {
+    name: "getItemById",
+    sampleRequest: {id: 1},
+    call: (request) => EolaireService.getItemById(request.id)
+  },
 
-  _requestValueChanged = (event) => {
-    this.setState({requestText: event.target.value});
-  }
+  {
+    name: "getItemProfile",
+    sampleRequest: {id: 1},
+    call: (request) => EolaireService.getItemProfile(request.id)
+  },
 
-  _onExecuteClick = () => {
-    const requestJson = JSON.parse(this.state.requestValue);
-    this._onRun(requestJson);
+  {
+    name: "getItemByType",
+    sampleRequest: {itemTypeId: 1, offsetToken: null, limit: 10},
+    call: (request) => EolaireService.getItemProfile(request.itemTypeId, request.offsetToken, request.limit)
+  },
+
+
+  /* Intentionally unsupported for demoing how it can be do that. */
+  {
+    name: "getUnsupportedItems",
+    sampleRequest: {id: 1, acceptableTypes: []},
+    call: () => new Promise((_, reject) => { reject({errorString: "Binding not implemented"}); })
   }
-}
+];
 
 //
 // DemoApiView
 //
 
-function createApiInput(obj) {
-  return {
-    request: JSON.stringify(obj),
-    lastResponse: "<NOT STARTED>",
-  }
-}
-
-type State = {
-  getEntityList: object
-};
-
-export default class DemoApiView extends Component<{}, {}, State> {
-  state = {
-    getEntityList: createApiInput(),
-    getEntityListResponseResult: "<PENDING>"
-  }
+export default class DemoApiView extends Component<{}, {}, {}> {
 
   componentDidMount(): void {
     TitleService.setTitle("Demo API View");
-
-    const p = EolaireService.getEntityList(null, 10);
-    p.then(function (data) {
-      console.log("getEntityList response", data);
-      this.setState({getEntityListResponseResult: JSON.stringify(data)});
-    }.bind(this), function (err) {
-      this.setState({getEntityListResponseResult: "<ERROR>"});
-    });
   }
 
   render(): ?ReactElement {
-    const getEntityListRequestStr = JSON.stringify(this.state.getEntityListRequest);
-
-    const getEntityListResponseResult = this.state.getEntityListResponseResult;
-
-    return (
-      <div className="container">
-        <p>Demo API View</p>
-        <hr/>
-        <h2>GetEntityList</h2>
-        <p>${getEntityListResponseResult}</p>
-        <hr/>
-        <table className="table account-list-table">
-          <thead>
-            <th>Request</th>
-            <th/>
-            <th>Response</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input className="input-xlarge" value={getEntityListRequestStr} onChange={this._getEntityListRequestChanged} />
-              </td>
-              <td><button type="button" className="btn btn-default">Execute</button></td>
-              <td>{this.state.getEntityListResponse}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-
-  _getEntityListRequestChanged = (event) => {
-    try {
-      const parsedValue = JSON.parse(event.target.value);
-      this.setState({getEntityListRequest: parsedValue});
-    } catch (e) {
-      console.debug("Malformed JSON in input, ignoring")
-    }
+    return <ApiConsoleView apiModel={EOLAIRE_API_MODEL} />;
   }
 }

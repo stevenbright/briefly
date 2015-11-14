@@ -4,6 +4,12 @@ body {
     /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+/* Input forms with inputs in monospace */
+
+.use-monospace {
+  font-family: Consolas, Lucida Console, monospace;
+}
+
 /* React Rater */
 /* TODO: move to separate file (or, better, scss) */
 /* Taken from https://github.com/NdYAG/star-rating/blob/master/star-rating.css */
