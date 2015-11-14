@@ -32,8 +32,8 @@ const EOLAIRE_API_MODEL = [
 
   {
     name: "getItemByType",
-    sampleRequest: {itemTypeId: 1, offsetToken: null, limit: 10},
-    call: (request) => EolaireService.getItemProfile(request.itemTypeId, request.offsetToken, request.limit)
+    sampleRequest: {itemTypeId: 7, offsetToken: null, limit: 10},
+    call: (request) => EolaireService.getItemByType(request.itemTypeId, request.offsetToken, request.limit)
   },
 
 
