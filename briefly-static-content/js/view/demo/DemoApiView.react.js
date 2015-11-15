@@ -26,7 +26,7 @@ const EOLAIRE_API_MODEL = [
 
   {
     name: "getItemProfile",
-    sampleRequest: {id: 1},
+    sampleRequest: {id: 1005},
     call: (request) => EolaireService.getItemProfile(request.id)
   },
 
