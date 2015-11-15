@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/rest/eolaire")
-public final class EolaireRestController extends AbstractRestController implements EolaireRestService, SecurityControllerMixin {
+public final class EolaireRestController extends BaseRestController implements EolaireRestService, SecurityControllerMixin {
   private final EolaireItemService itemService;
 
   @Autowired

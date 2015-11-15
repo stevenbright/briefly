@@ -64,6 +64,10 @@
       <groupId>com.truward.brikar</groupId>
       <artifactId>brikar-client</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.truward.brikar</groupId>
+      <artifactId>brikar-error-response</artifactId>
+    </dependency>
 
     <!-- DB -->
     <dependency>

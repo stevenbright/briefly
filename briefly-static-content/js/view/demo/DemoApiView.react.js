@@ -20,7 +20,7 @@ const EOLAIRE_API_MODEL = [
 
   {
     name: "getItemById",
-    sampleRequest: {id: 1},
+    sampleRequest: {id: 81},
     call: (request) => EolaireService.getItemById(request.id)
   },
 
