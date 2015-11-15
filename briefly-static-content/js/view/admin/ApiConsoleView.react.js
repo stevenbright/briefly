@@ -123,12 +123,10 @@ export default class ApiConsoleView extends Component<{},
     }
 
     responsePromise.then((data) => {
-      //console.log("data", data);
       this._handleResponse(started, false, pickedModel.name, jsObject, JSON.stringify(data));
     }, (err) => {
       let errorString;
       if (err instanceof XMLHttpRequest) {
-        window._LAST_AJAX_ERROR_ = err;
         errorString = "Status: " + err.status + " " + err.statusText + " - while accessing " + err.responseURL +
           " - response: " + JSON.stringify(err.response);
       } else {
