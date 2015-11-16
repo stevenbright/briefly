@@ -12,7 +12,7 @@ public final class ListQueryUtil {
   public static final int MAX_SIZE = 16;
 
   private static final String LONG_NUM_PREFIX = "OL-";
-  private static final String INVALID_OFFSET_TOKEN_MESSAGE = "";
+  private static final String INVALID_OFFSET_TOKEN_MESSAGE = "Invalid offset token";
 
   private ListQueryUtil() {} // Hidden
 
