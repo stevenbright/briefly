@@ -80,6 +80,9 @@ INSERT INTO item_profile (item_id, description, date_created, date_updated, flag
 INSERT INTO item_profile (item_id, description, date_created, date_updated, flags)
   VALUES (1006, 'Another Fine Author', '2015-05-28 09:13:19 UTC', '2015-05-28 11:16:34 UTC', 1);
 
+INSERT INTO item_profile (item_id, description, date_created, date_updated, flags)
+  VALUES (1100, 'Part of Noon Universe', '2015-06-21 15:52:49 UTC', '2015-07-01 12:41:01 UTC', 1);
+
 
 --
 -- What relations can be fetched for a given item?
