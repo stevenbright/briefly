@@ -484,8 +484,199 @@ var BOOK_NAME_PART = [
 'weekly', 'whoever', 'witness', 'wrap', 'yesterday', 'youth', 
 ];
 
-function randBookName() {
-    var result = [];
-    appendRandName(result, BOOK_NAME_PART, 1, 18);
-    return result.join(" ");
+function randBookName(result) {
+    var arr = result || [];
+    appendRandName(arr, BOOK_NAME_PART, 1, 18);
+    return result == null ? arr.join(" ") : result;
 }
+
+//
+// Generation code
+//
+
+function sqlStringify(str) {
+    if (str == null) {
+        return 'null';
+    }
+    if (str.indexOf("'") < 0) {
+        return "'" + str + "'";
+    }
+    return "'" + str.split("'").join("''") + "'";
+}
+
+
+function nameValuePairs(initFn) {
+    var values = {};
+    var ins = function (id, name) {
+        if (name in values) {
+            throw new Error("A value with name=" + name + " has been inserted, existing id=" + values[name]);
+        }
+        values[name] = id;
+    }
+    initFn(ins);
+    return values;
+}
+
+
+function setUpEntityTypes(context) {
+    context.entityTypes = nameValuePairs(function (ins) {
+        ins(1, 'author');
+        ins(2, 'language');
+        ins(3, 'person');
+        ins(5, 'book');
+        ins(6, 'movie');
+        ins(7, 'series');
+        ins(8, 'genre');
+        ins(9, 'book_origin');
+    });
+}
+
+function setUpLanguages(context) {
+    context.languages = nameValuePairs(function (ins) {
+        ins(50, "en");
+        ins(51, "ru");
+        ins(52, "cn");
+    });
+}
+
+function setUpGenres(context) {
+    context.genres = nameValuePairs(function (ins) {
+        ins(101, 'Poetry');
+        ins(102, 'Fantasy');
+        ins(103, 'Science Fiction');
+        ins(105, 'Biography');
+        ins(106, 'Novel');
+        ins(107, 'Drama');
+        ins(114, 'Modern');
+        ins(117, 'Classic');
+        ins(118, 'History');
+        ins(119, 'Adaptation');
+        ins(123, 'Tale');
+        ins(129, 'Short Story');
+        ins(140, 'Realistic Fiction');
+        ins(141, 'Folklore');
+        ins(145, 'Fable');
+        ins(148, 'Speech');
+        ins(150, 'Narrative');
+        ins(185, 'Essay');
+        ins(186, 'Mystery');
+    });
+}
+
+function insertOrigins(context) {
+   var count = context.originsCount || 3;
+    context.origins = nameValuePairs(function (ins) {
+        for (var i = 0; i < count; ++i) {
+            ins(200 + i, "Origin_" + i);
+        }
+    });
+   
+}
+
+function insertSeries(context) {
+    var count = context.seriesCount || 5;
+    context.series = nameValuePairs(function (ins) {
+        for (var i = 0; i < count; ++i) {
+            ins(300 + i, "Series_" + i);
+        }
+    });
+}
+
+function idByEntityTypeName(context, name) {
+    if (name in context.entityTypes) {
+        return context.entityTypes[name];
+    }
+
+    throw new Error("No entity type with name=" + name);
+}
+
+function getUniqueName(entityMap, generatorFn) {
+    var name;
+    for (;;) {
+        name = generatorFn();
+        if (name in entityMap) {
+            continue;
+        }
+        return name;
+    }
+}
+
+function insertAuthors(context) {
+    var authors = {};
+    var count = context.authorCount || 10;
+
+    var next = 1000;
+    for (var i = 0; i < count; ++i) {
+        next = next + rand(1, 3);
+        authors[getUniqueName(authors, randPersonName)] = next;
+    }
+
+    context.authors = authors;
+}
+
+function insertBooks(context) {
+    var books = {};
+    var count = context.bookCount || 15;
+
+    var next = 1000000;
+    for (var i = 0; i < count; ++i) {
+        next = next + rand(1, 3);
+        var title = randBookName();
+        books[getUniqueName(books, randBookName)] = next;
+    }
+
+    context.books = books;
+}
+
+function insertBlock(context, block, comment, name, result) {
+    comment(name + " entries");
+    var typeId = idByEntityTypeName(context, name);
+    Object.keys(block).map(function (name) {
+        result.push("INSERT INTO item (id, name, type_id) VALUES (" + block[name] + ", " +
+            sqlStringify(name) + ", " + typeId + ");");
+    });
+}
+
+function generateContent(context, result) {
+    var comment = function (what) {
+        result.push("\n");
+        result.push("-- " + what);
+    }
+
+    comment("Entity Types");
+    Object.keys(context.entityTypes).map(function (name) {
+        result.push("INSERT INTO entity_type (id, name) VALUES (" + context.entityTypes[name] + ", " +
+            sqlStringify(name) + ");");
+    });
+
+    insertBlock(context, context.genres, comment, "genre", result);
+    insertBlock(context, context.languages, comment, "language", result);
+    insertBlock(context, context.series, comment, "series", result);
+    insertBlock(context, context.origins, comment, "book_origin", result);
+    insertBlock(context, context.authors, comment, "person", result);
+    insertBlock(context, context.books, comment, "book", result);
+}
+
+function generateTestDb(context) {
+    context = context || {};
+
+    var result = [];
+
+    setUpEntityTypes(context);
+    setUpGenres(context);
+    setUpLanguages(context);
+    insertOrigins(context);
+    insertSeries(context);
+    insertAuthors(context);
+    insertBooks(context);
+
+    generateContent(context, result);
+
+    if (context.fileName != null) {
+        fs.writeFileSync(context.fileName, result.join("\n"));
+    } else {
+        console.log(result.join("\n"));
+    }
+}
+
+
