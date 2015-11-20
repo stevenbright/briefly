@@ -1,6 +1,6 @@
-jest.dontMock('../js/util/uri.js');
+jest.dontMock('../util/uri.js');
 
-var uri = require('../js/util/uri.js');
+var uri = require('../util/uri.js');
 var parseQueryString = uri.parseQueryString;
 
 describe('parse query string', function () {
