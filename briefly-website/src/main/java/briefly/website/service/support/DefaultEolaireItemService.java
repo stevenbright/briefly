@@ -60,7 +60,9 @@ public class DefaultEolaireItemService implements EolaireItemService {
   @Nonnull
   @Override
   public List<Long> getItemIdsByType(long itemTypeId, @Nullable Long startEntityId, int limit) {
-    return db.queryForList("SELECT id FROM item WHERE type_id=? AND ((? IS NULL) OR (id > ?)) ORDER BY id LIMIT ?",
+    // NOTE: ORDER BY type_id, id - is here because H2 disregards indexes in ORDER BY when ids in WHERE are not used
+    final String sql = "SELECT id FROM item WHERE type_id=? AND ((? IS NULL) OR (id > ?)) ORDER BY type_id, id LIMIT ?";
+    return db.queryForList(sql,
         Long.class, itemTypeId, startEntityId, startEntityId, limit);
   }
 
