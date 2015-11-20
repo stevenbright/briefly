@@ -1,4 +1,4 @@
-#
+# Babel+ReactJS makefile
 
 TO			=	target/release/brieflyWebsite/web
 NBIN		= ./node_modules/.bin
