@@ -38,7 +38,7 @@ class EolaireService {
   getItemByType(itemTypeId: number, offsetToken: string, limit: number): Promise {
     const request = prepareRequestWithOffsetAndLimit(offsetToken, limit);
     request.itemTypeId = itemTypeId;
-    return ajax.request("POST", "/rest/eolaire//item/query/by-type", request);
+    return ajax.request("POST", "/rest/eolaire/item/query/by-type", request);
   }
 };
 

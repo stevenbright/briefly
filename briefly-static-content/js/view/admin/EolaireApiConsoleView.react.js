@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import TitleService from '../../service/TitleService';
 import EolaireService from '../../service/EolaireService';
 import {Promise} from 'rsvp';
-import ApiConsoleView from '../admin/ApiConsoleView.react';
+import ApiConsoleView from './ApiConsoleView.react';
 
 //
 // Service API model
@@ -49,10 +49,10 @@ const EOLAIRE_API_MODEL = [
 // DemoApiView
 //
 
-export default class DemoApiView extends Component<{}, {}, {}> {
+export default class EolaireApiConsoleView extends Component<{}, {}, {}> {
 
   componentDidMount(): void {
-    TitleService.setTitle("Demo API View");
+    TitleService.setTitle("Eolaire API");
   }
 
   render(): ?ReactElement {
