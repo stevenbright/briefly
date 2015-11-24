@@ -49,9 +49,9 @@ export default class ApiConsoleView extends Component<{},
           <br/>
           <p className={headingClassName}><span>{logEntry.apiName}</span> - {statusUi}</p>
           <h4>Request</h4>
-          <p className="use-monospace">{logEntry.requestText}</p>
+          <p className="use-monospace break-all">{logEntry.requestText}</p>
           <h4>Response</h4>
-          <p className="use-monospace">{logEntry.responseText}</p>
+          <p className="use-monospace break-all">{logEntry.responseText}</p>
         </li>
       );
     });

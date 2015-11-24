@@ -19,6 +19,10 @@ class CatalogAdapterService {
     return this._getNextEntityTypesChunk(null, null, {}, DEFAULT_LIMIT /*2*/);
   }
 
+  getItemsByType(): Promise {
+    return new Promise((resolve, _) => { resolve({}); })
+  }
+
   //
   // Private
   //

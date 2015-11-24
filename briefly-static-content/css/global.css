@@ -10,6 +10,10 @@ body {
   font-family: Consolas, Lucida Console, monospace;
 }
 
+.break-all {
+  word-break: break-all;
+}
+
 /* React Rater */
 /* TODO: move to separate file (or, better, scss) */
 /* Taken from https://github.com/NdYAG/star-rating/blob/master/star-rating.css */
@@ -24,9 +28,9 @@ body {
     cursor: pointer;
     color: #ccc; }
     .star-rating a:hover {
-      color: #666; }
+      color: #707070; }
       .star-rating a:hover ~ a {
-        color: #666; }
+        color: #707070; }
     .star-rating a.is-active {
       color: #000 !important; }
       .star-rating a.is-active ~ a {
