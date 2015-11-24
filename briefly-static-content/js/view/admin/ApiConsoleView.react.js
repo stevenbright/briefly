@@ -60,7 +60,7 @@ export default class ApiConsoleView extends Component<{},
   _renderModelEntries(): ?ReactElement {
     return this.props.apiModel.map((apiEntry) => {
       const apiEntryClickHandler = () => {
-        this.setState({pickedModel: apiEntry, requestText: JSON.stringify(apiEntry.sampleRequest)});
+        this.setState({pickedModel: apiEntry, requestText: JSON.stringify(apiEntry.sampleRequest, null, 2)});
       };
       return (
         <li key={apiEntry.name} className="list-group-item">
@@ -76,7 +76,7 @@ export default class ApiConsoleView extends Component<{},
 
   _renderPickedApiSelection(): ?ReactElement {
     const pickedModel = this.state.pickedModel;
-    const requestStr = JSON.stringify(pickedModel.sampleRequest);
+    const requestStr = JSON.stringify(pickedModel.sampleRequest, null, 2);
 
     const runClickHandler = () => { this._handleRunButtonClick(pickedModel); };
 
@@ -90,6 +90,7 @@ export default class ApiConsoleView extends Component<{},
           <textarea
             className="form-control use-monospace"
             ref="textarea"
+            rows="8"
             onChange={this._handleRequestChange}
             value={this.state.requestText} />
         </div>
@@ -123,12 +124,12 @@ export default class ApiConsoleView extends Component<{},
     }
 
     responsePromise.then((data) => {
-      this._handleResponse(started, false, pickedModel.name, jsObject, JSON.stringify(data));
+      this._handleResponse(started, false, pickedModel.name, jsObject, JSON.stringify(data, null, 2));
     }, (err) => {
       let errorString;
       if (err instanceof XMLHttpRequest) {
         errorString = "Status: " + err.status + " " + err.statusText + " - while accessing " + err.responseURL +
-          " - response: " + JSON.stringify(err.response);
+          " - response: " + JSON.stringify(err.response, null, 2);
       } else {
         errorString = "Client error: " + err.errorString;
       }
@@ -144,7 +145,7 @@ export default class ApiConsoleView extends Component<{},
       id: apiName + "-" + this.state.responseLog.length,
       failed,
       apiName,
-      requestText: JSON.stringify(requestObject),
+      requestText: JSON.stringify(requestObject, null, 2),
       responseText,
       timeDelta,
       started

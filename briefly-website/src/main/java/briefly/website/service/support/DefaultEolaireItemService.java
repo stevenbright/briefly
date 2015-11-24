@@ -4,6 +4,7 @@ import briefly.website.model.RelationsFilterMode;
 import briefly.website.service.EolaireItemService;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.truward.orion.eolaire.model.EolaireModel;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,9 +154,10 @@ public class DefaultEolaireItemService implements EolaireItemService {
 
     @Override
     public EolaireModel.ItemProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
+      final String description = rs.getString("description");
       return EolaireModel.ItemProfile.newBuilder()
           .setItemId(rs.getLong("item_id"))
-          .setDescription(rs.getString("description"))
+          .setDescription(description != null ? description : "")
           .setCreated(rs.getTimestamp("date_created").getTime())
           .setUpdated(rs.getTimestamp("date_updated").getTime())
           .setFlags(rs.getLong("flags"))
@@ -173,7 +175,11 @@ public class DefaultEolaireItemService implements EolaireItemService {
     try {
       return EolaireModel.Metadata.parseFrom(metadataBytes);
     } catch (InvalidProtocolBufferException e) {
-      throw new SQLException("Unable to deserialize metadata", e);
+      // TODO: proper deserialization
+      LoggerFactory.getLogger(DefaultEolaireItemService.class).error("Unable to deserialize item metadata", e);
+      //throw new SQLException("Unable to deserialize metadata", e);
+
+      return EolaireModel.Metadata.newBuilder().build();
     }
   }
 }

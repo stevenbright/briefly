@@ -13,6 +13,12 @@ import ApiConsoleView from './ApiConsoleView.react';
 
 const MODEL = [
   {
+    name: "getItemByType",
+    sampleRequest: {"type": "book", "offsetToken": null, "limit": 10},
+    call: (r) => CatalogAdapterService.getItemByType(r["type"], r["offsetToken"], r["limit"])
+  },
+
+  {
     name: "getAllEntityTypes",
     sampleRequest: {},
     call: (request) => CatalogAdapterService.getAllEntityTypes()
