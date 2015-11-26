@@ -47,6 +47,7 @@ class CatalogAdapterService {
     promise = promise.then((response) => {
       logInfo("Get item type", response);
       const ids = response["itemIds"];
+      const newOffsetToken = response["offsetToken"];
       if (ids.length > 0) {
         // map items
         const itemPromises = ids.map((itemId) => EolaireService.getItemById(itemId).then((item) => {
@@ -71,7 +72,12 @@ class CatalogAdapterService {
             return itemModel;
           });
         }));
-        return all(itemPromises);
+        return all(itemPromises).then((response) => {
+          return {
+            items: response,
+            offsetToken: newOffsetToken
+          };
+        });
       }
 
       return new Promise((resolve, _) => { resolve({items: [], type, offsetToken: null}); });
