@@ -72,11 +72,10 @@ class CatalogAdapterService {
             return itemModel;
           });
         }));
+
+        // Final result
         return all(itemPromises).then((response) => {
-          return {
-            items: response,
-            offsetToken: newOffsetToken
-          };
+          return { items: response, offsetToken: newOffsetToken };
         });
       }
 
