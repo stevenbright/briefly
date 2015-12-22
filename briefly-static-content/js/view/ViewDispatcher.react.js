@@ -67,7 +67,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
 
       case Nav.CATALOG:
         TitleService.setTitle("Catalog");
-        return (<CatalogPage />);
+        return (<CatalogPage itemType="book" offsetToken={null} limit={null} />);
 
       case Nav.ABOUT:
         TitleService.setTitle("About");

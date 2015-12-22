@@ -58,7 +58,8 @@ class CatalogAdapterService {
               id: item["id"],
               type,
               name: item["name"],
-              profile: null
+              profile: null,
+              relatedItems: []
             };
             if ("profile" in itemProfile && itemProfile["profile"] != null) {
               const p = itemProfile["profile"];

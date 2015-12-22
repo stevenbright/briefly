@@ -1,25 +1,29 @@
-var React = require('react');
+'use strict';
+
+import React, {Component} from 'react';
 
 var FavStar = require('../common/FavStar.react');
 var InlineCatalogItem = require('../catalog/InlineCatalogItem.react');
 
-module.exports = React.createClass({
+export default class CatalogListItem extends Component<{},
+  /*Props*/{ item: object, isFavorite: boolean },
+  /*State*/{}> {
 
-  render: function() {
+  render(): ?ReactElement {
     // {id: 1, title: 'Item Name', type: 'book', relatedItems: {genre: [{<NamedItem>}], person: [{<NamedItem>}]}}
-    var item = this.props.item;
-    var itemDetailPageUrl = '#/item/' + item.type + '/' + item.id; // TODO: detail page?
+    const item = this.props.item;
+    const itemDetailPageUrl = '#/item/' + item.type + '/' + item.id; // TODO: detail page?
 
-    var isFavorite = this.props.isFavorite;
+    const isFavorite = this.props.isFavorite;
 
     // related items UI
-    var relatedItemElementsUi = [];
+    const relatedItemElementsUi = [];
     for (var relationKey in item.relatedItems) {
       if (!item.relatedItems.hasOwnProperty(relationKey)) {
         continue;
       }
 
-      var relatedEntriesUi = item.relatedItems[relationKey].map(function (relatedItem) {
+      const relatedEntriesUi = item.relatedItems[relationKey].map(function (relatedItem) {
         return (<InlineCatalogItem key={relatedItem.id} item={relatedItem} />);
       });
 
@@ -51,4 +55,4 @@ module.exports = React.createClass({
       </li>
     );
   }
-});
+}
