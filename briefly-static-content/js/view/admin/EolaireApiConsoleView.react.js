@@ -37,7 +37,7 @@ const EOLAIRE_API_MODEL = [
   },
 
 
-  /* Intentionally unsupported for demoing how it can be do that. */
+  /* Intentionally unsupported for demoing error response. */
   {
     name: "getUnsupportedItems",
     sampleRequest: {id: 1, acceptableTypes: []},

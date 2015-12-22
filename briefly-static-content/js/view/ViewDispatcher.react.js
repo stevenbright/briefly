@@ -7,6 +7,7 @@ import {Router} from 'director';
 // widgets
 
 import StorefrontPage from './storefront/StorefrontPage.react';
+import CatalogPage from './catalog/CatalogPage.react';
 import AboutPage from './about/AboutPage.react';
 import DemoPage from './demo/DemoPage.react';
 
@@ -17,6 +18,7 @@ import TitleService from '../service/TitleService';
 const Nav = {
   UNDEFINED:    "UNDEFINED",
   STOREFRONT:   "STOREFRONT",
+  CATALOG:      "CATALOG",
   DEMO:         "DEMO",
   ABOUT:        "ABOUT"
 };
@@ -41,6 +43,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
 
   componentDidMount(): void {
     const gotoStorefrontPage = this.setState.bind(this, {nowShowing: Nav.STOREFRONT});
+    const gotoCatalogPage = this.setState.bind(this, {nowShowing: Nav.CATALOG});
     const gotoAboutPage = this.setState.bind(this, {nowShowing: Nav.ABOUT});
 
     // TODO: disable in prod
@@ -48,6 +51,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
 
     const router = Router({
       '/storefront': gotoStorefrontPage,
+      '/catalog': gotoCatalogPage,
       '/demo': gotoDemoPage,
       '/about': gotoAboutPage
     });
@@ -61,6 +65,10 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
         TitleService.setTitle("Storefront");
         return (<StorefrontPage />);
 
+      case Nav.CATALOG:
+        TitleService.setTitle("Catalog");
+        return (<CatalogPage />);
+
       case Nav.ABOUT:
         TitleService.setTitle("About");
         return (<AboutPage />);
@@ -71,7 +79,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
 
       default:
         TitleService.setTitle("Loading...");
-        return (<div/>);
+        return (<div>Loading...</div>);
     }
   }
 }
