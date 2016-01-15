@@ -1,6 +1,6 @@
 package briefly.website.service;
 
-import com.truward.orion.eolaire.model.EolaireModel;
+import briefly.eolaire.model.EolaireModel;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;

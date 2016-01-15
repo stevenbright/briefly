@@ -1,7 +1,7 @@
 package briefly.website.service;
 
 import briefly.website.model.RelationsFilterMode;
-import com.truward.orion.eolaire.model.EolaireModel;
+import briefly.eolaire.model.EolaireModel;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

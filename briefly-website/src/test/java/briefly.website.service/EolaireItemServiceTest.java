@@ -1,7 +1,7 @@
 package briefly.website.service;
 
 import briefly.website.model.RelationsFilterMode;
-import com.truward.orion.eolaire.model.EolaireModel;
+import briefly.eolaire.model.EolaireModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

@@ -25,41 +25,48 @@ function getRatingFromDOMEvent(e, props) {
 // Helper subcomponent
 //
 
-var Star = React.createClass({
-  getDefaultProps: function () {
-    return { isActive: false, isDisabled: false }
-  },
+// See also http://babeljs.io/blog/2015/06/07/react-on-es6-plus/
 
-  render: function () {
+class Star extends Component<{}, {}, {}> {
+  static defaultProps = {
+    isActive: false,
+    isDisabled: false
+  }
+
+  static propTypes = {
+    isActive: React.PropTypes.bool.isRequired,
+    isDisabled: React.PropTypes.bool.isRequired
+  }
+
+  render(): ?ReactElement {
     let className = this.props.isActive? 'is-active': '';
     className += this.props.isDisabled? ' is-disabled': '';
 
     return <a className={className}>&#9733;</a>;
   }
-});
+}
 
 //
 // StarRating component
 //
 
-var StarRating = React.createClass({
+export default class StarRating extends Component<{}, {}, {}> {
 
-  getInitialState: function() {
-    return {
-      lastRating: this.props.rating,
-      rating: this.props.rating
-    }
-  },
+  state = {
+    lastRating: this.props.rating,
+    rating: this.props.rating
+  }
 
-  getDefaultProps: function() {
-    return { total: 5, rating: 0 };
-  },
+  static defaultProps = {
+    total: 5,
+    rating: 0
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.setState({ rating: this.props.rating });
-  },
+  }
 
-  render: function () {
+  render(): ?ReactElement {
     let total = Number(this.props.total);
     let limit = Number(this.props.limit);
     const rating = Number(this.state.rating);
@@ -81,24 +88,24 @@ var StarRating = React.createClass({
         onClick={this._handleClick}>{nodes}
       </div>
     );
-  },
-  
+  }
+
   //
   // StarRating Private
   //
- 
-  _handleMouseEnter: function () {
-    this.setState({ rating: 0 });
-  },
 
-  _handleMouseMove: function(e) {
+  _handleMouseEnter = () => {
+    this.setState({ rating: 0 });
+  }
+
+  _handleMouseMove = (e) => {
     const rating = getRatingFromDOMEvent(e, this.props);
     const callback = this.props.onRate;
 
     callback && callback(rating);
-  },
+  }
 
-  _handleMouseLeave: function () {
+  _handleMouseLeave = () => {
     const callback = this.props.onRate;
     const state = this.state;
 
@@ -106,9 +113,9 @@ var StarRating = React.createClass({
       callback && callback(state.lastRating);
       this.setState({ rating: state.lastRating });
     }
-  },
+  }
 
-  _handleClick: function (e) {
+  _handleClick = (e) => {
     const rating = getRatingFromDOMEvent(e, this.props);
     const lastRating = Number(this.state.lastRating);
     const callback = this.props.onRate;
@@ -120,6 +127,5 @@ var StarRating = React.createClass({
     this.setState({ lastRating: rating, rating: rating });
     callback && callback(rating, lastRating);
   }
-});
+}
 
-module.exports = StarRating;

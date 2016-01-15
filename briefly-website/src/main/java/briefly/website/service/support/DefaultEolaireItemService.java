@@ -3,7 +3,7 @@ package briefly.website.service.support;
 import briefly.website.model.RelationsFilterMode;
 import briefly.website.service.EolaireItemService;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.truward.orion.eolaire.model.EolaireModel;
+import briefly.eolaire.model.EolaireModel;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;

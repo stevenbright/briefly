@@ -51,8 +51,9 @@
 
     <!-- Service Model -->
     <dependency>
-      <groupId>com.truward.orion</groupId>
-      <artifactId>eolaire-model</artifactId>
+      <groupId>${groupId}</groupId>
+      <artifactId>briefly-model</artifactId>
+      <version>${version}</version>
     </dependency>
 
     <!-- Brikar -->
