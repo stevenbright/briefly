@@ -33,14 +33,26 @@ export default class CatalogPage extends Component<{},
 
     console.log("Rendering actual item list=", this.state.items);
 
+
+    let paginationUi;
+    if (this.state.offsetToken != null) {
+      paginationUi = (
+        <div className="container">
+          <button className="btn btn-default" onClick={this._handleLoadMoreButtonClick}>Load More...</button>
+          <hr/>
+        </div>);
+    } else {
+      paginationUi = (<div><hr/></div>);
+    }
+
     return (
-      <div className="container">
-        <h2>Catalog Page</h2>
-        <hr/>
-        <CatalogList items={this.state.items} />
-        <hr/>
-        <p>offsetToken: {this.state.offsetToken}</p>
-        <p>itemStr: {itemStr}</p>
+      <div>
+        <div className="container">
+          <h2>Catalog Page</h2>
+          <hr/>
+          <CatalogList items={this.state.items} />
+        </div>
+        {paginationUi}
       </div>
     );
   }
@@ -49,6 +61,14 @@ export default class CatalogPage extends Component<{},
   // Private
   //
 
+  _handleLoadMoreButtonClick = (event) => {
+    this._fetch({
+      itemType: this.props.itemType,
+      offsetToken: this.state.offsetToken,
+      limit: this.props.limit
+    });
+  }
+
   _fetch(props): void {
     console.log("About to fetch catalog items", props);
     const itemType = props.itemType;
@@ -56,7 +76,12 @@ export default class CatalogPage extends Component<{},
     const limit = props.limit || 10;
     console.log("Params: ", itemType, offsetToken, limit);
     const p = CatalogAdapterService.getItemByType(itemType, offsetToken, limit);
-    p.then((response) => this.setState({items: response.items, offsetToken: response.offsetToken, loading: false}),
+    p.then(
+      (response) => this.setState({
+        items: this.state.items.concat(response.items),
+        offsetToken: response.offsetToken,
+        loading: false
+      }),
       (err) => console.log("Error:", err));
   }
 }
