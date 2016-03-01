@@ -8,6 +8,7 @@ import {Router} from 'director';
 
 import StorefrontPage from './storefront/StorefrontPage.react';
 import CatalogPage from './catalog/CatalogPage.react';
+import GenericDetailPage from './detail/GenericDetailPage.react';
 import AboutPage from './about/AboutPage.react';
 import DemoPage from './demo/DemoPage.react';
 
@@ -18,6 +19,7 @@ import TitleService from '../service/TitleService';
 const Nav = {
   UNDEFINED:    "UNDEFINED",
   STOREFRONT:   "STOREFRONT",
+  DETAIL:       "DETAIL",
   CATALOG:      "CATALOG",
   DEMO:         "DEMO",
   ABOUT:        "ABOUT"
@@ -29,6 +31,8 @@ type State = {
   nowShowing: string,
 
   // controller variables
+  type: ?string,
+  id: ?number,
   offsetToken: ?number,
   limit: ?number
 };
@@ -45,6 +49,9 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
     const gotoStorefrontPage = this.setState.bind(this, {nowShowing: Nav.STOREFRONT});
     const gotoCatalogPage = this.setState.bind(this, {nowShowing: Nav.CATALOG});
     const gotoAboutPage = this.setState.bind(this, {nowShowing: Nav.ABOUT});
+    const gotoDetailPage = function (type, id) {
+      this.setState({nowShowing: Nav.DETAIL, type, id: parseInt(id)});
+    }.bind(this);
 
     // TODO: disable in prod
     const gotoDemoPage = this.setState.bind(this, {nowShowing: Nav.DEMO});
@@ -52,6 +59,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
     const router = Router({
       '/storefront': gotoStorefrontPage,
       '/catalog': gotoCatalogPage,
+      '/item/:type/:id': gotoDetailPage,
       '/demo': gotoDemoPage,
       '/about': gotoAboutPage
     });
@@ -72,6 +80,10 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
       case Nav.ABOUT:
         TitleService.setTitle("About");
         return (<AboutPage />);
+
+      case Nav.DETAIL:
+        TitleService.setTitle("Item");
+        return (<GenericDetailPage itemId={this.state.id} itemType={this.state.type} />);
 
       case Nav.DEMO: // should be inactive in prod
         TitleService.setTitle("Demo");
