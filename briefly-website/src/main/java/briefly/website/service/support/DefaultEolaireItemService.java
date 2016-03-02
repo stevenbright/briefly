@@ -4,6 +4,7 @@ import briefly.website.model.RelationsFilterMode;
 import briefly.website.service.EolaireItemService;
 import com.google.protobuf.InvalidProtocolBufferException;
 import briefly.eolaire.model.EolaireModel;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
@@ -176,7 +177,9 @@ public class DefaultEolaireItemService implements EolaireItemService {
       return EolaireModel.Metadata.parseFrom(metadataBytes);
     } catch (InvalidProtocolBufferException e) {
       // TODO: proper deserialization
-      LoggerFactory.getLogger(DefaultEolaireItemService.class).error("Unable to deserialize item metadata", e);
+      final Logger logger = LoggerFactory.getLogger(DefaultEolaireItemService.class);
+      logger.debug("Unable to deserialize item metadata", e); // Produces a lot of log entries
+      logger.error("Invalid metadata entry for item");
       //throw new SQLException("Unable to deserialize metadata", e);
 
       return EolaireModel.Metadata.newBuilder().build();

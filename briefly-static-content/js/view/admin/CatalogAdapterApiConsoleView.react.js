@@ -19,6 +19,12 @@ const MODEL = [
   },
 
   {
+    name: "getItem",
+    sampleRequest: {"id": 1005},
+    call: (r) => CatalogAdapterService.getItem(r["id"])
+  },
+
+  {
     name: "getAllEntityTypes",
     sampleRequest: {},
     call: (request) => CatalogAdapterService.getAllEntityTypes()

@@ -9,6 +9,19 @@ function logInfo() {
   //return console.log.apply(console, arguments);
 }
 
+function getItemTypeById(entityTypes /*Array<{string(type): number(id)}>*/, itemTypeId /*number*/) {
+  for (let entityNameKey in entityTypes) {
+    if (entityTypes.hasOwnProperty(entityNameKey)) {
+      const entityTypeId = entityTypes[entityNameKey];
+      if (entityTypeId === itemTypeId) {
+        return entityNameKey;
+      }
+    }
+  }
+
+  return "unknown";
+}
+
 class CatalogAdapterService {
 
   constructor() {
@@ -21,6 +34,43 @@ class CatalogAdapterService {
     }
 
     return this._getNextEntityTypesChunk(null, null, {}, DEFAULT_LIMIT /*2*/);
+  }
+
+  getItem(id): Promise {
+    const itemByIdPromise = EolaireService.getItemById(id);
+    const itemProfilePromise = EolaireService.getItemProfile(id);
+    const allEntityTypesPromise = this.getAllEntityTypes();
+
+    let promise = all([itemByIdPromise, itemProfilePromise, allEntityTypesPromise]).then((response) => {
+      logInfo("Get item ID+Profile", response);
+      const item = response[0];
+      const profile = response[1];
+      const entityTypes = response[2];
+
+      let profileContents = null;
+      if ("profile" in profile) {
+        const p = profile["profile"];
+        if (p != null) {
+          // sample entry: {"profile":{"itemId":85331,"description":"","created":1440423447843,"updated":1440423447843,"flags":1,"metadata":{"entries":[]}}}
+          profileContents = {
+            description: p["description"],
+            created: new Date(p["created"]),
+            updated: new Date(p["updated"])
+          }
+        }
+      }
+
+      let itemProfile = {
+        id: item["id"],
+        name: item["name"],
+        type: getItemTypeById(entityTypes, item["itemTypeId"]),
+        profile: profileContents
+      };
+
+      return new Promise((resolve, _) => { resolve(itemProfile); });
+    });
+
+    return promise;
   }
 
   getItemByType(type, offsetToken, limit): Promise {
