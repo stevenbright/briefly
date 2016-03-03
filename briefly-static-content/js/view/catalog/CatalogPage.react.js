@@ -70,7 +70,6 @@ export default class CatalogPage extends Component<{},
   }
 
   _fetch(props): void {
-    console.log("About to fetch catalog items", props);
     const itemType = props.itemType;
     const offsetToken = props.offsetToken || null;
     const limit = props.limit || 10;

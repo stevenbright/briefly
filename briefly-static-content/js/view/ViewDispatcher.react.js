@@ -31,7 +31,6 @@ type State = {
   nowShowing: string,
 
   // controller variables
-  type: ?string,
   id: ?number,
   offsetToken: ?number,
   limit: ?number
@@ -41,6 +40,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
   state = {
     nowShowing: Nav.UNDEFINED,
 
+    id: undefined,
     offsetToken: undefined,
     limit: undefined
   }
@@ -49,8 +49,8 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
     const gotoStorefrontPage = this.setState.bind(this, {nowShowing: Nav.STOREFRONT});
     const gotoCatalogPage = this.setState.bind(this, {nowShowing: Nav.CATALOG});
     const gotoAboutPage = this.setState.bind(this, {nowShowing: Nav.ABOUT});
-    const gotoDetailPage = function (type, id) {
-      this.setState({nowShowing: Nav.DETAIL, type, id: parseInt(id)});
+    const gotoDetailPage = function (id) {
+      this.setState({nowShowing: Nav.DETAIL, id: parseInt(id)});
     }.bind(this);
 
     // TODO: disable in prod
@@ -59,7 +59,7 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
     const router = Router({
       '/storefront': gotoStorefrontPage,
       '/catalog': gotoCatalogPage,
-      '/item/:type/:id': gotoDetailPage,
+      '/item/:id': gotoDetailPage,
       '/demo': gotoDemoPage,
       '/about': gotoAboutPage
     });
@@ -82,8 +82,8 @@ export default class ViewDispatcher extends Component<{}, {}, State> {
         return (<AboutPage />);
 
       case Nav.DETAIL:
-        TitleService.setTitle("Item");
-        return (<GenericDetailPage itemId={this.state.id} itemType={this.state.type} />);
+        TitleService.setTitle("Item Details");
+        return (<GenericDetailPage itemId={this.state.id} />);
 
       case Nav.DEMO: // should be inactive in prod
         TitleService.setTitle("Demo");

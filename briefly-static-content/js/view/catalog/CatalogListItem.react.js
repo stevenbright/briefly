@@ -12,7 +12,7 @@ export default class CatalogListItem extends Component<{},
   render(): ?ReactElement {
     // {id: 1, title: 'Item Name', type: 'book', relatedItems: {genre: [{<NamedItem>}], person: [{<NamedItem>}]}}
     const item = this.props.item;
-    const itemDetailPageUrl = '#/item/' + item.type + '/' + item.id; // TODO: detail page?
+    const itemDetailPageUrl = '#/item/' + item.id;
 
     const isFavorite = this.props.isFavorite;
 
