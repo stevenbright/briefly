@@ -41,6 +41,8 @@ export default class GenericDetailPage extends Component<{},
           <hr/>
           <p>Created: {createdStr}</p>
           <p>Updated: {updatedStr}</p>
+
+          <p>/Download Button/</p>
         </div>);
     } else {
       profileUi = (<div/>);
@@ -50,8 +52,12 @@ export default class GenericDetailPage extends Component<{},
       <div className="container">
         <h2>Detail Page</h2>
         <hr/>
+        <p>ID: {details.id}</p>
         <p>Item: {details.name}</p>
         <p>Type: {details.type}</p>
+        <p>Genres: TODO</p>
+        <p>Languages: TODO</p>
+        <p>Authors: TODO</p>
         {profileUi}
       </div>
     );
