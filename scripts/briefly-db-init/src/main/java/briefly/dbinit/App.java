@@ -1,5 +1,7 @@
 package briefly.dbinit;
 
+import briefly.dbinit.model.LaunchMode;
+import briefly.dbinit.service.CheckService;
 import briefly.dbinit.service.MigrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,15 +14,20 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 public final class App implements Runnable {
   private final Logger log;
   private final MigrationService.Contract migrationService;
+  private final CheckService.Contract checkService;
+  private final LaunchMode launchMode;
 
-  public App(MigrationService.Contract migrationService) {
+  public App(MigrationService.Contract migrationService, CheckService.Contract checkService, LaunchMode launchMode) {
     this.log = LoggerFactory.getLogger(App.class);
-    this.migrationService = migrationService;
+    this.migrationService = Objects.requireNonNull(migrationService, "migrationService");
+    this.checkService = Objects.requireNonNull(checkService, "checkService");
+    this.launchMode = Objects.requireNonNull(launchMode, "launchMode");
   }
 
   public static void main(String[] args) throws Exception {
@@ -38,8 +45,20 @@ public final class App implements Runnable {
 
   @Override
   public void run() {
-    log.info("App is running");
-    migrationService.runMigration();
+    log.info("App is running, launchMode={}", launchMode);
+
+    switch (launchMode) {
+      case MIGRATION:
+        migrationService.runMigration();
+        break;
+
+      case CHECK:
+        checkService.check();
+        break;
+
+      default:
+        log.error("Unsupported launchMode={}", launchMode);
+    }
   }
 
   //
@@ -67,7 +86,7 @@ public final class App implements Runnable {
     }
 
     // create property source and insert it into a context
-    final PropertiesPropertySource propertySource = new PropertiesPropertySource("eolApp", properties);
+    final PropertiesPropertySource propertySource = new PropertiesPropertySource("brieflyDbinitApp", properties);
     context.getEnvironment().getPropertySources().addFirst(propertySource);
   }
 }

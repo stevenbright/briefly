@@ -173,6 +173,12 @@ public class DefaultEolaireItemService implements EolaireItemService {
       return EolaireModel.Metadata.newBuilder().build();
     }
 
+//    try {
+//      //EolaireModel.MetadataEntry.parseFrom("");
+//    } catch (InvalidProtocolBufferException ignored) {
+//      LoggerFactory.getLogger(DefaultEolaireItemService.class).debug("", ignored);
+//    }
+
     try {
       return EolaireModel.Metadata.parseFrom(metadataBytes);
     } catch (InvalidProtocolBufferException e) {

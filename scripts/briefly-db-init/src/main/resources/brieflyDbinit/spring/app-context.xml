@@ -7,7 +7,11 @@
   <context:annotation-config/>
   <context:property-placeholder />
 
-  <bean id="app" class="briefly.dbinit.App" autowire="constructor"/>
+  <bean id="launchMethod" class="briefly.dbinit.model.LaunchMode" factory-method="valueOf">
+    <constructor-arg value="${briefly.dbinit.mode}"/>
+  </bean>
+
+  <bean id="app" class="briefly.dbinit.App" autowire="constructor" depends-on="launchMethod" />
 
   <import resource="dao/datasource-context.xml"/>
   <import resource="dao/dao-context.xml"/>

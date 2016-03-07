@@ -9,4 +9,7 @@
   <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
+
+  <!-- Don't capture info level from spring -->
+  <logger name="org.springframework" level="WARN"/>
 </configuration>

@@ -6,4 +6,5 @@
 
   <bean class="briefly.dbinit.service.MigrationService$Impl" autowire="constructor"/>
   <bean class="briefly.dbinit.service.DataTransferService$Impl" autowire="constructor"/>
+  <bean class="briefly.dbinit.service.CheckService$Impl" autowire="constructor"/>
 </beans>

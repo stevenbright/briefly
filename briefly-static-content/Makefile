@@ -1,6 +1,6 @@
 # Babel+ReactJS makefile
 
-TO			=	target/release/brieflyWebsite/web
+TO			=	target/release/brieflyWebsite/web/static
 NBIN		= ./node_modules/.bin
 PORT		= 8000
 

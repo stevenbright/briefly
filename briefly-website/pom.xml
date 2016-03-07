@@ -39,6 +39,20 @@
       <version>${slf4j.version}</version>
     </dependency>
 
+    <!-- Web app static content -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>briefly-static-content</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- Service Model -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>briefly-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- User Service Model -->
     <dependency>
       <groupId>com.truward.orion</groupId>
@@ -47,13 +61,6 @@
     <dependency>
       <groupId>com.truward.orion</groupId>
       <artifactId>user-service-spring-security</artifactId>
-    </dependency>
-
-    <!-- Service Model -->
-    <dependency>
-      <groupId>${groupId}</groupId>
-      <artifactId>briefly-model</artifactId>
-      <version>${version}</version>
     </dependency>
 
     <!-- Brikar -->

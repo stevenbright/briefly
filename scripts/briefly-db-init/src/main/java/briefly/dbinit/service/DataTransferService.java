@@ -37,6 +37,9 @@ public final class DataTransferService {
   public static final class Impl implements Contract {
     private static final int BOOK_TRANSFER_LIMIT = 1000;
 
+    private static final int ITEM_ADDED_LOG_LIMIT = 100;
+    private int itemAdded = 0;
+
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final JdbcOperations db;
 
@@ -53,13 +56,15 @@ public final class DataTransferService {
     private Map<Long, Long> langToItem;
     private Map<Long, Long> seriesToItem;
 
+
+
     public Impl(JdbcOperations db) {
       this.db = db;
     }
 
     @Override
     public boolean prepare() {
-      log.info("About to run migration...");
+      log.info("Preparing data transfer...");
 
       try {
         final int count = db.queryForObject("SELECT COUNT(0) FROM item", Integer.class);
@@ -93,7 +98,7 @@ public final class DataTransferService {
       final List<BookMeta> bookMetas = db.query("SELECT id, title, f_size, add_date, lang_id, origin_id " +
           "FROM book_meta WHERE ((? IS NULL) OR (id > ?)) ORDER BY id LIMIT ?", new BookMetaRowMapper(),
           startId, startId, limit);
-      log.info("BookMetas={}", bookMetas);
+      log.trace("BookMetas={}", bookMetas);
 
       for (final BookMeta bookMeta : bookMetas) {
         final Long itemId = addItem(bookMeta.getTitle(), bookTypeId);
@@ -170,10 +175,18 @@ public final class DataTransferService {
     // Private
     //
 
+    private void logItemAdded(String itemName) {
+      ++itemAdded;
+      if (itemAdded % ITEM_ADDED_LOG_LIMIT == 0) {
+        log.info("{} item(s) added, current itemName={}", itemAdded, itemName);
+      }
+    }
+
     private void insertBookProfile(Long itemId, int flag, EolaireModel.Metadata metadata) {
       final UtcTime now = UtcTime.now();
       db.update("INSERT INTO item_profile (item_id, description, date_created, date_updated, flags, metadata) " +
-          "VALUES (?, ?, ?, ?, ?, ?)", itemId, null, now.asCalendar(), now.asCalendar(), flag, metadata);
+          "VALUES (?, ?, ?, ?, ?, ?)", itemId, null, now.asCalendar(), now.asCalendar(), flag, metadata.toByteArray());
+      logItemAdded("bookProfile");
     }
 
     private List<SeriesPos> getSeriesPos(Long bookId) {
@@ -190,6 +203,7 @@ public final class DataTransferService {
     private void insertRelation(Long lhs, Long rhs, Long typeId) {
       assert lhs != null && rhs != null && typeId != null;
       db.update("INSERT INTO item_relation (lhs, rhs, type_id) VALUES (?, ?, ?)", lhs, rhs, typeId);
+      logItemAdded("relation#" + typeId);
     }
 
     private Map<Long, Long> insertNamedValues(String typeName, List<NamedValue> values) {
@@ -207,6 +221,7 @@ public final class DataTransferService {
     private Long addItem(String itemName, Long itemTypeId) {
       final Long id = getNextItemId();
       db.update("INSERT INTO item (id, name, type_id) VALUES (?, ?, ?)", id, itemName, itemTypeId);
+      logItemAdded(itemName);
       return id;
     }
 
@@ -230,6 +245,7 @@ public final class DataTransferService {
 
       final Long id = getNextEntityTypeId();
       db.update("INSERT INTO entity_type (id, name) VALUES (?, ?)", id, entityName);
+      logItemAdded(entityName);
       return id;
     }
 
