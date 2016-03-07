@@ -37,3 +37,19 @@ java -cp ~/.m2/repository/com/h2database/h2/1.4.183/h2-1.4.183.jar org.h2.tools.
 rlwrap java -cp ~/.m2/repository/com/h2database/h2/1.4.183/h2-1.4.183.jar org.h2.tools.Shell -url jdbc:h2:/tmp/brieflydb/brieflydb-v1 -user sa
 ```
 
+Connect to backup database:
+
+```
+rlwrap java -cp ~/.m2/repository/com/h2database/h2/1.4.183/h2-1.4.183.jar org.h2.tools.Shell -url jdbc:h2:zip:~/Downloads/backup/brieflydb-v1.mv.db.zip -user sa
+```
+
+
+## Defragmentation
+
+Connect to DB and then use
+
+```
+SHUTDOWN DEFRAG;
+```
+
+See also http://www.h2database.com/html/features.html

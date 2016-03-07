@@ -9,6 +9,17 @@ function logInfo() {
   //return console.log.apply(console, arguments);
 }
 
+function convertMetadata(metadata) {
+  let result = {};
+  for (let i = 0; i < metadata.entries.length; ++i) {
+    const entry = metadata.entries[i];
+    if (entry.key === 'fileSize') {
+      result.fileSize = entry["value"]["intValue"];
+    }
+  }
+  return result;
+}
+
 function getItemTypeById(entityTypes /*Array<{string(type): number(id)}>*/, itemTypeId /*number*/) {
   for (let entityNameKey in entityTypes) {
     if (entityTypes.hasOwnProperty(entityNameKey)) {
@@ -55,7 +66,9 @@ class CatalogAdapterService {
           profileContents = {
             description: p["description"],
             created: new Date(p["created"]),
-            updated: new Date(p["updated"])
+            updated: new Date(p["updated"]),
+            meta: p["metadata"],
+            metadata: convertMetadata(p["metadata"])
           }
         }
       }
@@ -117,7 +130,7 @@ class CatalogAdapterService {
                 description: p["description"],
                 created: new Date(p["created"]),
                 updated: new Date(p["updated"]),
-                metadata: new Date(p["metadata"])
+                metadata: p["metadata"]
               };
             }
             return itemModel;
