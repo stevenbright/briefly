@@ -1,6 +1,5 @@
 package briefly.website.service;
 
-import briefly.website.model.RelationsFilterMode;
 import briefly.eolaire.model.EolaireModel;
 
 import javax.annotation.Nonnull;
@@ -36,5 +35,5 @@ public interface EolaireItemService {
                                   int limit);
 
   @Nonnull
-  List<EolaireModel.ItemRelation> getItemRelations(long itemId, RelationsFilterMode filterMode);
+  List<EolaireModel.ItemRelation> getItemRelations(long itemId, EolaireModel.RelationsFilterMode filterMode);
 }

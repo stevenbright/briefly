@@ -40,6 +40,13 @@ class EolaireService {
     request.itemTypeId = itemTypeId;
     return ajax.request("POST", "/rest/eolaire/item/query/by-type", request);
   }
+
+  getItemRelations(itemId: number, filterMode: string): Promise {
+    return ajax.request("POST", "/rest/eolaire//item/relations", {
+      "itemId": itemId,
+      "relationsFilterMode": filterMode
+    });
+  }
 };
 
 export default new EolaireService();

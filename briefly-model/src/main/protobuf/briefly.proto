@@ -80,6 +80,11 @@ message ItemProfile {
   optional Metadata metadata = 6;
 }
 
+enum RelationsFilterMode {
+  ALL = 1;
+  ITEM_LIST = 2;
+}
+
 //
 // Service Messages
 //
@@ -150,4 +155,13 @@ message GetItemByRelationResponse {
   optional string offsetToken = 1;
 
   repeated int64 itemIds = 2;
+}
+
+message GetItemRelationsRequest {
+  required int64 itemId = 1;
+  required RelationsFilterMode relationsFilterMode = 2;
+}
+
+message GetItemRelationsResponse {
+  repeated ItemRelation itemRelations = 1;
 }

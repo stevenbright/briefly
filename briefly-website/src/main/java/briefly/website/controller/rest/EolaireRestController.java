@@ -152,4 +152,11 @@ public final class EolaireRestController extends BaseRestController implements E
 
     return builder.build();
   }
+
+  @Override
+  public EolaireModel.GetItemRelationsResponse getItemRelations(@RequestBody EolaireModel.GetItemRelationsRequest request) {
+    return EolaireModel.GetItemRelationsResponse.newBuilder()
+        .addAllItemRelations(itemService.getItemRelations(request.getItemId(), request.getRelationsFilterMode()))
+        .build();
+  }
 }

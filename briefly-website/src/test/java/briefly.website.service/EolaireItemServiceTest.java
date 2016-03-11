@@ -1,6 +1,5 @@
 package briefly.website.service;
 
-import briefly.website.model.RelationsFilterMode;
 import briefly.eolaire.model.EolaireModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -119,19 +118,19 @@ public final class EolaireItemServiceTest {
 
   @Test
   public void shouldGetAllRelations() {
-    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(81L, RelationsFilterMode.ALL);
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(81L, EolaireModel.RelationsFilterMode.ALL);
     assertEquals(Collections.singletonList(rel(1100, 7)), relations);
   }
 
   @Test
   public void shouldGetNonEmptyItemListRelations() {
-    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1100L, RelationsFilterMode.ITEM_LIST);
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1100L, EolaireModel.RelationsFilterMode.ITEM_LIST);
     assertEquals(Arrays.asList(rel(12, 2), rel(1005, 1), rel(1006, 1)), relations);
   }
 
   @Test
   public void shouldGetEmptyItemListRelations() {
-    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L, RelationsFilterMode.ITEM_LIST);
+    final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L, EolaireModel.RelationsFilterMode.ITEM_LIST);
     assertEquals(Collections.emptyList(), relations);
   }
 

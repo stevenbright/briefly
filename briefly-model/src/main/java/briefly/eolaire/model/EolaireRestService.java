@@ -38,4 +38,8 @@ public interface EolaireRestService {
   @RequestMapping(value = "/item/query/by-rel", method = RequestMethod.POST)
   @ResponseBody
   GetItemByRelationResponse getItemByRelation(@RequestBody GetItemByRelationRequest request);
+
+  @RequestMapping(value = "/item/relations", method = RequestMethod.POST)
+  @ResponseBody
+  GetItemRelationsResponse getItemRelations(@RequestBody GetItemRelationsRequest request);
 }

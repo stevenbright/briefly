@@ -36,6 +36,12 @@ const EOLAIRE_API_MODEL = [
     call: (request) => EolaireService.getItemByType(request.itemTypeId, request.offsetToken, request.limit)
   },
 
+  {
+    name: "getItemRelations",
+    sampleRequest: {itemId: 1005, filterMode: "ALL"},
+    call: (request) => EolaireService.getItemRelations(request.itemId, request.filterMode)
+  },
+
 
   /* Intentionally unsupported for demoing error response. */
   {

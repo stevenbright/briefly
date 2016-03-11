@@ -1,9 +1,8 @@
 package briefly.website.service.support;
 
-import briefly.website.model.RelationsFilterMode;
+import briefly.eolaire.model.EolaireModel;
 import briefly.website.service.EolaireItemService;
 import com.google.protobuf.InvalidProtocolBufferException;
-import briefly.eolaire.model.EolaireModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -94,7 +93,7 @@ public class DefaultEolaireItemService implements EolaireItemService {
 
   @Nonnull
   @Override
-  public List<EolaireModel.ItemRelation> getItemRelations(long itemId, RelationsFilterMode filterMode) {
+  public List<EolaireModel.ItemRelation> getItemRelations(long itemId, EolaireModel.RelationsFilterMode filterMode) {
     switch (filterMode) {
       case ALL:
         return db.query("SELECT rhs, type_id, metadata FROM item_relation WHERE lhs=? ORDER BY rhs",
