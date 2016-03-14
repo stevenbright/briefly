@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author Alexander Shabanov
  */
 @Transactional
-public class DefaultEolaireItemService implements EolaireItemService {
+public class DefaultEolaireItemService extends AbstractService implements EolaireItemService {
   private final JdbcOperations db;
 
   public DefaultEolaireItemService(JdbcOperations jdbcOperations) {

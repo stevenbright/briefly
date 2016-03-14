@@ -29,6 +29,8 @@
     <slf4j.version>1.7.12</slf4j.version>
     <commons-logging.version>1.1.1</commons-logging.version>
 
+    <awssdk.version>1.9.13</awssdk.version>
+
     <!--<spring.version>3.2.14.RELEASE</spring.version>-->
     <!--<spring-security.version>3.2.3.RELEASE</spring-security.version>-->
 
@@ -93,6 +95,13 @@
         <groupId>com.truward.brikar</groupId>
         <artifactId>brikar-error-response</artifactId>
         <version>${brikar.version}</version>
+      </dependency>
+
+      <!-- AWS SDK -->
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-java-sdk-s3</artifactId>
+        <version>${awssdk.version}</version>
       </dependency>
 
       <!-- Spring Persistence -->
