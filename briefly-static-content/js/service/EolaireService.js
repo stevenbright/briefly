@@ -20,29 +20,33 @@ function prepareRequestWithOffsetAndLimit(offsetToken, limit) {
   return request;
 }
 
+function toUrl(path) {
+  return "/rest/eolaire" + path;
+}
+
 class EolaireService {
 
   getEntityList(offsetToken: string, limit: number): Promise {
     const request = prepareRequestWithOffsetAndLimit(offsetToken, limit);
-    return ajax.request("POST", "/rest/eolaire/entity/list", request);
+    return ajax.request("POST", toUrl("/entity/list"), request);
   }
 
   getItemById(id: number): Promise {
-    return ajax.request("GET", "/rest/eolaire/item/entry/" + id);
+    return ajax.request("GET", toUrl("/item/entry/" + id));
   }
 
   getItemProfile(id: number): Promise {
-    return ajax.request("GET", "/rest/eolaire/item/profile/" + id);
+    return ajax.request("GET", toUrl("/item/profile/" + id));
   }
 
   getItemByType(itemTypeId: number, offsetToken: string, limit: number): Promise {
     const request = prepareRequestWithOffsetAndLimit(offsetToken, limit);
     request.itemTypeId = itemTypeId;
-    return ajax.request("POST", "/rest/eolaire/item/query/by-type", request);
+    return ajax.request("POST", toUrl("/item/query/by-type"), request);
   }
 
   getItemRelations(itemId: number, filterMode: string): Promise {
-    return ajax.request("POST", "/rest/eolaire//item/relations", {
+    return ajax.request("POST", toUrl("/item/relations"), {
       "itemId": itemId,
       "relationsFilterMode": filterMode
     });

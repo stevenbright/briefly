@@ -21,6 +21,7 @@ import java.util.Objects;
  */
 @Transactional
 public class DefaultEolaireItemService extends AbstractService implements EolaireItemService {
+  private static final EolaireModel.Metadata EMPTY_METADATA = EolaireModel.Metadata.newBuilder().build();
   private final JdbcOperations db;
 
   public DefaultEolaireItemService(JdbcOperations jdbcOperations) {
@@ -168,15 +169,9 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
 
   private static EolaireModel.Metadata getMetadata(ResultSet rs, String name) throws SQLException {
     final byte[] metadataBytes = rs.getBytes(name);
-    if (metadataBytes == null) {
-      return EolaireModel.Metadata.newBuilder().build();
+    if (metadataBytes == null || metadataBytes.length == 0) {
+      return EMPTY_METADATA;
     }
-
-//    try {
-//      //EolaireModel.MetadataEntry.parseFrom("");
-//    } catch (InvalidProtocolBufferException ignored) {
-//      LoggerFactory.getLogger(DefaultEolaireItemService.class).debug("", ignored);
-//    }
 
     try {
       return EolaireModel.Metadata.parseFrom(metadataBytes);
@@ -185,9 +180,8 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
       final Logger logger = LoggerFactory.getLogger(DefaultEolaireItemService.class);
       logger.debug("Unable to deserialize item metadata", e); // Produces a lot of log entries
       logger.error("Invalid metadata entry for item");
+      return EMPTY_METADATA;
       //throw new SQLException("Unable to deserialize metadata", e);
-
-      return EolaireModel.Metadata.newBuilder().build();
     }
   }
 }

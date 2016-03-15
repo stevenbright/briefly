@@ -20,6 +20,25 @@ function convertMetadata(metadata) {
   return result;
 }
 
+function mapProfile(profile) {
+  // sample entry: {"profile":{"itemId":85331,"description":"","created":1440423447843,"updated":1440423447843,"flags":1,"metadata":{"entries":[]}}}
+  if (!("profile" in profile)) {
+    return null;
+  }
+
+  const p = profile["profile"];
+  if (p == null) {
+    return null;
+  }
+
+  return {
+    description: p["description"],
+    created: new Date(p["created"]),
+    updated: new Date(p["updated"]),
+    metadata: convertMetadata(p["metadata"])
+  };
+}
+
 function getItemTypeById(entityTypes /*Array<{string(type): number(id)}>*/, itemTypeId /*number*/) {
   for (let entityNameKey in entityTypes) {
     if (entityTypes.hasOwnProperty(entityNameKey)) {
@@ -58,26 +77,11 @@ class CatalogAdapterService {
       const profile = response[1];
       const entityTypes = response[2];
 
-      let profileContents = null;
-      if ("profile" in profile) {
-        const p = profile["profile"];
-        if (p != null) {
-          // sample entry: {"profile":{"itemId":85331,"description":"","created":1440423447843,"updated":1440423447843,"flags":1,"metadata":{"entries":[]}}}
-          profileContents = {
-            description: p["description"],
-            created: new Date(p["created"]),
-            updated: new Date(p["updated"]),
-            meta: p["metadata"],
-            metadata: convertMetadata(p["metadata"])
-          }
-        }
-      }
-
       let itemProfile = {
         id: item["id"],
         name: item["name"],
         type: getItemTypeById(entityTypes, item["itemTypeId"]),
-        profile: profileContents
+        profile: mapProfile(profile)
       };
 
       return new Promise((resolve, _) => { resolve(itemProfile); });
@@ -117,23 +121,13 @@ class CatalogAdapterService {
           const p = EolaireService.getItemProfile(itemId);
           return p.then((itemProfile) => {
             logInfo("itemProfile", itemProfile, "item", item);
-            const itemModel = {
+            return {
               id: item["id"],
               type,
               name: item["name"],
-              profile: null,
+              profile: mapProfile(itemProfile),
               relatedItems: []
             };
-            if ("profile" in itemProfile && itemProfile["profile"] != null) {
-              const p = itemProfile["profile"];
-              itemModel.profile = {
-                description: p["description"],
-                created: new Date(p["created"]),
-                updated: new Date(p["updated"]),
-                metadata: p["metadata"]
-              };
-            }
-            return itemModel;
           });
         }));
 
