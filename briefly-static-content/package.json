@@ -16,11 +16,11 @@
     "rsvp-ajax": "1.0.2",
     "rsvp-cache": "^1.0.0",
 
-    "react": "^0.13.3"
+    "react": "^0.14.7"
   },
 
   "devDependencies": {
-    "jest-cli": "^0.4.3",
+    "jest-cli": "^0.9.2",
 
     "babel-jest": "^5.3.0",
     "babelify": "^6.1.3",
