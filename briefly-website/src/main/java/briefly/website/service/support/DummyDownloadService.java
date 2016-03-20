@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * @author Alexander Shabanov
  */
-public final class DummyBookDownloadService implements DownloadService {
+public final class DummyDownloadService implements DownloadService {
 
   @Override
   public void download(long id, HttpServletResponse response) throws IOException {

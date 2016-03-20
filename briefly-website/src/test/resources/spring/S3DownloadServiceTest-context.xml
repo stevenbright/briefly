@@ -12,7 +12,7 @@
     <constructor-arg value="com.amazonaws.services.s3.AmazonS3" />
   </bean>
 
-  <bean class="briefly.website.service.support.S3BookDownloadService">
+  <bean class="briefly.website.service.support.S3DownloadService">
     <constructor-arg ref="eolaireItemService" />
     <constructor-arg ref="amazonS3Mock" />
   </bean>

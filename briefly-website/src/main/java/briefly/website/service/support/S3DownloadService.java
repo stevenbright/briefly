@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Alexander Shabanov
  */
-public final class S3BookDownloadService extends AbstractService implements DownloadService {
+public final class S3DownloadService extends AbstractService implements DownloadService {
   private final long urlExpirationMillis = 60000L;
   private final String bucketKeyPrefix = "myBucket"; // TODO: properties
   private final String bucketKeySuffix = ".fb2.zip";
@@ -25,7 +25,7 @@ public final class S3BookDownloadService extends AbstractService implements Down
   private final AmazonS3 s3Client;
   private long cachedOriginId = -1;
 
-  public S3BookDownloadService(EolaireItemService itemService, AmazonS3 s3Client) {
+  public S3DownloadService(EolaireItemService itemService, AmazonS3 s3Client) {
     this.itemService = itemService;
     this.s3Client = s3Client;
   }

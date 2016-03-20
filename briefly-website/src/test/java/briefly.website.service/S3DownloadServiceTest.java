@@ -2,12 +2,12 @@ package briefly.website.service;
 
 import briefly.eolaire.model.EolaireModel;
 import briefly.eolaire.model.MetadataKeys;
+import briefly.website.service.support.S3DownloadService;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +23,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
+ * Tests for {@link S3DownloadService}.
+ *
  * @author Alexander Shabanov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
