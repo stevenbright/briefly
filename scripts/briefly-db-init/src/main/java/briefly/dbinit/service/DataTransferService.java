@@ -133,7 +133,7 @@ public final class DataTransferService {
         final Metadata.Builder metadataBuilder = Metadata.newBuilder();
         if (pos != null) {
           metadataBuilder.addEntries(MetadataEntry.newBuilder()
-              .setKey("seriesPos").setValue(VariantValue.newBuilder().setIntValue(pos))
+              .setKey(MetadataKeys.SERIES_POS_KEY).setValue(VariantValue.newBuilder().setIntValue(pos))
               .setType(VariantType.INT32)
               .build());
         }
@@ -142,9 +142,14 @@ public final class DataTransferService {
             .setType(VariantType.INT64)
             .setValue(VariantValue.newBuilder().setLongValue(bookMeta.getId())));
 
-        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.FILE_SIZE_KEY)
+        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.LIB_FILE_SIZE_KEY)
             .setType(VariantType.INT32)
             .setValue(VariantValue.newBuilder().setIntValue(bookMeta.getFileSize())));
+
+        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.LIB_ADDED_KEY)
+            .setType(VariantType.INT64)
+            .setValue(VariantValue.newBuilder().setLongValue(bookMeta.getDateAdded().getTime()).build())
+            .build());
 
         insertBookProfile(itemId, 1, metadataBuilder.build());
       }

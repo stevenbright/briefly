@@ -21,6 +21,8 @@ import java.util.Objects;
  */
 @Transactional
 public class DefaultEolaireItemService extends AbstractService implements EolaireItemService {
+  private static final boolean ENABLE_METADATA_DEBUG = Boolean.valueOf(System.getProperty("briefly.website.metadataDebug"));
+
   private static final EolaireModel.Metadata EMPTY_METADATA = EolaireModel.Metadata.newBuilder().build();
   private final JdbcOperations db;
 
@@ -112,6 +114,20 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
     }
   }
 
+  @Override
+  public long saveItem(String name, long itemTypeId, String description, long createdTimestamp, long flags,
+                       EolaireModel.Metadata metadata) {
+    final long id = getNextItemId();
+    db.update("INSERT INTO item (id, name, type_id) VALUES (?, ?, ?)", id, name, itemTypeId);
+
+    return 0;
+  }
+
+  @Override
+  public void addRelations(List<EolaireModel.ItemRelation> relations) {
+
+  }
+
   //
   // Mappers
   //
@@ -174,7 +190,11 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
     }
 
     try {
-      return EolaireModel.Metadata.parseFrom(metadataBytes);
+      final EolaireModel.Metadata metadata = EolaireModel.Metadata.parseFrom(metadataBytes);
+      if (ENABLE_METADATA_DEBUG) {
+        LoggerFactory.getLogger(DefaultEolaireItemService.class).debug("Deserialized metadata={}", metadata);
+      }
+      return metadata;
     } catch (InvalidProtocolBufferException e) {
       // TODO: proper deserialization
       final Logger logger = LoggerFactory.getLogger(DefaultEolaireItemService.class);
@@ -183,5 +203,9 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
       return EMPTY_METADATA;
       //throw new SQLException("Unable to deserialize metadata", e);
     }
+  }
+
+  private Long getNextItemId() {
+    return db.queryForObject("SELECT seq_item.nextval", Long.class);
   }
 }

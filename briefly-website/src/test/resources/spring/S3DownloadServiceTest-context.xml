@@ -4,7 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   <import resource="db-test-context.xml"/>
 
-  <bean class="briefly.website.service.support.DefaultEolaireItemService">
+  <bean id="eolaireItemService" class="briefly.website.service.support.DefaultEolaireItemService">
     <constructor-arg ref="brieflyWebsite.dao.jdbcTemplate" />
+  </bean>
+
+  <bean id="amazonS3Mock" class="org.mockito.Mockito" factory-method="mock">
+    <constructor-arg value="com.amazonaws.services.s3.AmazonS3" />
+  </bean>
+
+  <bean class="briefly.website.service.support.S3BookDownloadService">
+    <constructor-arg ref="eolaireItemService" />
+    <constructor-arg ref="amazonS3Mock" />
   </bean>
 </beans>

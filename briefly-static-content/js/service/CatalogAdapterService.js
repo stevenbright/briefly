@@ -13,8 +13,14 @@ function convertMetadata(metadata) {
   let result = {};
   for (let i = 0; i < metadata.entries.length; ++i) {
     const entry = metadata.entries[i];
-    if (entry.key === 'fileSize') {
-      result.fileSize = entry["value"]["intValue"];
+    if (entry.key === 'libSize') {
+      result.libSize = entry["value"]["intValue"];
+    } else if (entry.key === 'libId') {
+      result.libId = entry["value"]["longValue"];
+    } else if (entry.key === 'libAdded') {
+      result.libAdded = new Date(entry["value"]["longValue"]);
+    } else if (entry.key === 'seriesPos') {
+      result.seriesPos = entry["value"]["intValue"];
     }
   }
   return result;
@@ -72,7 +78,6 @@ class CatalogAdapterService {
     const allEntityTypesPromise = this.getAllEntityTypes();
 
     let promise = all([itemByIdPromise, itemProfilePromise, allEntityTypesPromise]).then((response) => {
-      logInfo("Get item ID+Profile", response);
       const item = response[0];
       const profile = response[1];
       const entityTypes = response[2];

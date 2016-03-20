@@ -33,6 +33,11 @@ public final class S3BookDownloadService extends AbstractService implements Down
   @Override
   public void download(long id, HttpServletResponse response) throws IOException {
     final String presignedUrl = getPresignedBookUrl(id);
+    if (presignedUrl == null) {
+      response.sendError(HttpServletResponse.SC_NOT_FOUND);
+      return;
+    }
+
     log.info("Using presigned URL={}", presignedUrl);
     response.sendRedirect(presignedUrl);
   }

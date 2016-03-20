@@ -36,4 +36,18 @@ public interface EolaireItemService {
 
   @Nonnull
   List<EolaireModel.ItemRelation> getItemRelations(long itemId, EolaireModel.RelationsFilterMode filterMode);
+
+
+  //
+  // Save functionality
+  //
+
+  long saveItem(String name,
+                long itemTypeId,
+                String description,
+                long createdTimestamp,
+                long flags,
+                EolaireModel.Metadata metadata);
+
+  void addRelations(List<EolaireModel.ItemRelation> relations);
 }
