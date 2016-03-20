@@ -3,7 +3,7 @@ package briefly.dbinit.service;
 import briefly.dbinit.model.BookMeta;
 import briefly.dbinit.model.NamedValue;
 import briefly.dbinit.model.SeriesPos;
-import com.truward.orion.eolaire.model.EolaireModel;
+import briefly.eolaire.model.MetadataKeys;
 import com.truward.time.UtcTime;
 import com.truward.time.jdbc.UtcTimeSqlUtil;
 import org.slf4j.Logger;
@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static briefly.eolaire.model.EolaireModel.*;
 
 /**
  * @author Alexander Shabanov
@@ -128,21 +130,21 @@ public final class DataTransferService {
         }
 
         // create metadata with series position and known file size
-        final EolaireModel.Metadata.Builder metadataBuilder = EolaireModel.Metadata.newBuilder();
+        final Metadata.Builder metadataBuilder = Metadata.newBuilder();
         if (pos != null) {
-          metadataBuilder.addEntries(EolaireModel.MetadataEntry.newBuilder()
-              .setKey("seriesPos").setValue(EolaireModel.VariantValue.newBuilder().setIntValue(pos))
-              .setType(EolaireModel.VariantType.INT32)
+          metadataBuilder.addEntries(MetadataEntry.newBuilder()
+              .setKey("seriesPos").setValue(VariantValue.newBuilder().setIntValue(pos))
+              .setType(VariantType.INT32)
               .build());
         }
 
-        metadataBuilder.addEntries(EolaireModel.MetadataEntry.newBuilder().setKey("libId")
-            .setType(EolaireModel.VariantType.INT64)
-            .setValue(EolaireModel.VariantValue.newBuilder().setLongValue(bookMeta.getId())));
+        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.LIB_ID_KEY)
+            .setType(VariantType.INT64)
+            .setValue(VariantValue.newBuilder().setLongValue(bookMeta.getId())));
 
-        metadataBuilder.addEntries(EolaireModel.MetadataEntry.newBuilder().setKey("fileSize")
-            .setType(EolaireModel.VariantType.INT32)
-            .setValue(EolaireModel.VariantValue.newBuilder().setIntValue(bookMeta.getFileSize())));
+        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.FILE_SIZE_KEY)
+            .setType(VariantType.INT32)
+            .setValue(VariantValue.newBuilder().setIntValue(bookMeta.getFileSize())));
 
         insertBookProfile(itemId, 1, metadataBuilder.build());
       }
@@ -186,7 +188,7 @@ public final class DataTransferService {
       }
     }
 
-    private void insertBookProfile(Long itemId, int flag, EolaireModel.Metadata metadata) {
+    private void insertBookProfile(Long itemId, int flag, Metadata metadata) {
       final UtcTime now = UtcTime.now();
       db.update("INSERT INTO item_profile (item_id, description, date_created, date_updated, flags, metadata) " +
           "VALUES (?, ?, ?, ?, ?, ?)", itemId, null, now.asCalendar(), now.asCalendar(), flag, metadata.toByteArray());

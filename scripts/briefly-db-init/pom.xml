@@ -35,9 +35,9 @@
   <dependencies>
     <!-- Eolaire Model -->
     <dependency>
-      <groupId>com.truward.orion</groupId>
-      <artifactId>eolaire-model</artifactId>
-      <version>1.0.0</version>
+      <groupId>briefly</groupId>
+      <artifactId>briefly-model</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
     <!-- UTC time -->
