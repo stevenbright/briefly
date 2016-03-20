@@ -8,7 +8,7 @@ INSERT INTO entity_type (id, name) VALUES (5, 'book');
 INSERT INTO entity_type (id, name) VALUES (6, 'movie');
 INSERT INTO entity_type (id, name) VALUES (7, 'series');
 INSERT INTO entity_type (id, name) VALUES (8, 'genre');
-INSERT INTO entity_type (id, name) VALUES (9, 'book_origin');
+INSERT INTO entity_type (id, name) VALUES (9, 'origin');
 
 --
 -- Persons (Authors)
@@ -70,8 +70,11 @@ INSERT INTO item_relation (lhs, rhs, type_id) VALUES (1100, 1005, 1);
 INSERT INTO item_relation (lhs, rhs, type_id) VALUES (1100, 1006, 1);
 -- Far Rainbow -> ru (language)
 INSERT INTO item_relation (lhs, rhs, type_id) VALUES (1100, 12, 2);
+-- Far Rainbow -> RussianBooks (origin)
+INSERT INTO item_relation (lhs, rhs, type_id) VALUES (1100, 54, 9);
 -- Noon -> Far Rainbow (series)
 INSERT INTO item_relation (lhs, rhs, type_id) VALUES (81, 1100, 7);
+
 
 -- Item Profile
 INSERT INTO item_profile (item_id, description, date_created, date_updated, flags, metadata)

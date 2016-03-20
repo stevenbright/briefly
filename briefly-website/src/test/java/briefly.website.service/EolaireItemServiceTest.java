@@ -27,7 +27,7 @@ public final class EolaireItemServiceTest {
 
   private final List<EolaireModel.EntityType> actualEntityTypes = Collections.unmodifiableList(Arrays.asList(
       entityType(1, "author"), entityType(2, "language"), entityType(3, "person"), entityType(5, "book"),
-      entityType(6, "movie"), entityType(7, "series"), entityType(8, "genre"), entityType(9, "book_origin")));
+      entityType(6, "movie"), entityType(7, "series"), entityType(8, "genre"), entityType(9, "origin")));
 
   @Resource EolaireItemService itemService;
 
@@ -48,8 +48,8 @@ public final class EolaireItemServiceTest {
     assertEquals(Collections.singletonList(EolaireModel.ItemProfile.newBuilder()
             .setItemId(1005L)
             .setDescription("Fine Author")
-            .setCreated(1432762974000L)
-            .setUpdated(1432811825000L)
+            .setCreated(1432737774000L)
+            .setUpdated(1432786625000L)
             .setFlags(1)
             .setMetadata(EolaireModel.Metadata.newBuilder().build())
             .build()),
@@ -61,8 +61,8 @@ public final class EolaireItemServiceTest {
     assertEquals(Collections.singletonList(EolaireModel.ItemProfile.newBuilder()
             .setItemId(1006L)
             .setDescription("Another Fine Author")
-            .setCreated(1432804399000L)
-            .setUpdated(1432811794000L)
+            .setCreated(1432779199000L)
+            .setUpdated(1432786594000L)
             .setFlags(1)
             .setMetadata(EolaireModel.Metadata.newBuilder().build())
             .build()),
@@ -181,6 +181,29 @@ public final class EolaireItemServiceTest {
         .build()), profile);
 
     assertEquals(relations, actualRelations);
+  }
+
+  @Test
+  public void shouldUpdateMetadata() {
+    // Given:
+    final long itemId = 1100L;
+    final EolaireModel.ItemProfile profile = itemService.getItemProfile(itemId).get(0);
+    final EolaireModel.Metadata oldMetadata = profile.getMetadata();
+    final EolaireModel.Metadata newMetadata = MetadataKeys
+        .addLibSize(
+            MetadataKeys.addSeriesPos(MetadataKeys.addLibId(EolaireModel.Metadata.newBuilder(), 123L),
+                10),
+            423000)
+        .build();
+
+    // When:
+    itemService.updateMetadata(itemId, newMetadata);
+    final EolaireModel.ItemProfile newProfile = itemService.getItemProfile(itemId).get(0);
+
+    // Then:
+    assertEquals(0, oldMetadata.getEntriesCount());
+    assertEquals(3, newProfile.getMetadata().getEntriesCount());
+    assertEquals(newMetadata, newProfile.getMetadata());
   }
 
   //

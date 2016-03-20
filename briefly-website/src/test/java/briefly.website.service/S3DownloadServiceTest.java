@@ -44,4 +44,10 @@ public final class S3DownloadServiceTest {
     verify(response).sendError(HttpServletResponse.SC_NOT_FOUND);
     verifyZeroInteractions(amazonS3Mock);
   }
+
+  @Test
+  public void shouldSaveExistingItem() throws IOException {
+    // Given:
+
+  }
 }

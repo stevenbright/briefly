@@ -129,6 +129,11 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
   }
 
   @Override
+  public void updateMetadata(long itemId, EolaireModel.Metadata metadata) {
+    db.update("UPDATE item_profile SET metadata=? WHERE item_id=?", toBytes(metadata), itemId);
+  }
+
+  @Override
   public void addRelations(long itemId, List<EolaireModel.ItemRelation> relations) {
     for (final EolaireModel.ItemRelation itemRelation : relations) {
       addRelation(itemId, itemRelation);

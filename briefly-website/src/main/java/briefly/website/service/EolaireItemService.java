@@ -49,5 +49,7 @@ public interface EolaireItemService {
                 long flags,
                 EolaireModel.Metadata metadata);
 
+  void updateMetadata(long itemId, EolaireModel.Metadata metadata);
+
   void addRelations(long itemId, List<EolaireModel.ItemRelation> relations);
 }
