@@ -3,6 +3,8 @@ package briefly.website.service.support;
 import briefly.eolaire.model.EolaireModel;
 import briefly.website.service.EolaireItemService;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.truward.time.UtcTime;
+import com.truward.time.jdbc.UtcTimeSqlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -13,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -117,20 +120,37 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
   @Override
   public long saveItem(String name, long itemTypeId, String description, long createdTimestamp, long flags,
                        EolaireModel.Metadata metadata) {
-    final long id = getNextItemId();
-    db.update("INSERT INTO item (id, name, type_id) VALUES (?, ?, ?)", id, name, itemTypeId);
-
-    return 0;
+    final long itemId = getNextItemId();
+    final Calendar dateCreated = UtcTime.valueOf(createdTimestamp).asCalendar();
+    db.update("INSERT INTO item (id, name, type_id) VALUES (?, ?, ?)", itemId, name, itemTypeId);
+    db.update("INSERT INTO item_profile (item_id, description, date_created, date_updated, flags, metadata) " +
+        "VALUES (?, ?, ?, ?, ?, ?)", itemId, description, dateCreated, dateCreated, flags, toBytes(metadata));
+    return itemId;
   }
 
   @Override
-  public void addRelations(List<EolaireModel.ItemRelation> relations) {
-
+  public void addRelations(long itemId, List<EolaireModel.ItemRelation> relations) {
+    for (final EolaireModel.ItemRelation itemRelation : relations) {
+      addRelation(itemId, itemRelation);
+    }
   }
 
   //
-  // Mappers
+  // Private
   //
+
+  private void addRelation(long itemId, EolaireModel.ItemRelation itemRelation) {
+    db.update("INSERT INTO item_relation (lhs, rhs, type_id) VALUES (?, ?, ?)", itemId, itemRelation.getTargetItemId(),
+        itemRelation.getRelationTypeId(), toBytes(itemRelation.getMetadata()));
+  }
+
+  private static byte[] toBytes(EolaireModel.Metadata metadata) {
+    if (metadata.getEntriesCount() == 0) {
+      return null;
+    }
+
+    return metadata.toByteArray();
+  }
 
   private static final class ItemRelationRowMapper implements RowMapper<EolaireModel.ItemRelation> {
 
@@ -172,11 +192,13 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
     @Override
     public EolaireModel.ItemProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
       final String description = rs.getString("description");
+      final UtcTime dateCreated = UtcTimeSqlUtil.getUtcTime(rs, "date_created");
+      final UtcTime dateUpdated = UtcTimeSqlUtil.getUtcTime(rs, "date_updated");
       return EolaireModel.ItemProfile.newBuilder()
           .setItemId(rs.getLong("item_id"))
           .setDescription(description != null ? description : "")
-          .setCreated(rs.getTimestamp("date_created").getTime())
-          .setUpdated(rs.getTimestamp("date_updated").getTime())
+          .setCreated(dateCreated.getTime())
+          .setUpdated(dateUpdated.getTime())
           .setFlags(rs.getLong("flags"))
           .setMetadata(getMetadata(rs, "metadata"))
           .build();

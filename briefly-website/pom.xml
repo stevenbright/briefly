@@ -36,7 +36,16 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>${slf4j.version}</version>
+    </dependency>
+
+    <!-- UTC time -->
+    <dependency>
+      <groupId>com.truward.time</groupId>
+      <artifactId>utc-time</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.truward.time</groupId>
+      <artifactId>utc-time-sql</artifactId>
     </dependency>
 
     <!-- Web app static content -->

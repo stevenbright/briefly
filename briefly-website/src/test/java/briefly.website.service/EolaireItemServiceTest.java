@@ -1,6 +1,8 @@
 package briefly.website.service;
 
 import briefly.eolaire.model.EolaireModel;
+import briefly.eolaire.model.MetadataKeys;
+import com.truward.time.UtcTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -132,6 +136,38 @@ public final class EolaireItemServiceTest {
   public void shouldGetEmptyItemListRelations() {
     final List<EolaireModel.ItemRelation> relations = itemService.getItemRelations(1200L, EolaireModel.RelationsFilterMode.ITEM_LIST);
     assertEquals(Collections.emptyList(), relations);
+  }
+
+  @Test
+  public void shouldInsertItemAndRelation() {
+    // Given:
+    final String name = "SampleBook";
+    final long bookTypeId = actualEntityTypes.stream().filter(entityType -> entityType.getName().equals("book"))
+        .collect(Collectors.toList()).get(0).getId();
+    final long created = UtcTime.days(365 * 35).getTime();
+    final String description = "Sample Book Description. Can be a very long one.";
+    final long flags = 12003L;
+    final long libId = 982;
+    final EolaireModel.Metadata metadata = MetadataKeys.addLibId(EolaireModel.Metadata.newBuilder(), libId).build();
+
+    // When:
+    final long itemId = itemService.saveItem(name, bookTypeId, description, created, flags, metadata);
+
+    // Then:
+    final EolaireModel.Item item = itemService.getItemById(itemId);
+    assertEquals(EolaireModel.Item.newBuilder()
+        .setId(itemId).setName(name).setItemTypeId(bookTypeId)
+        .build(), item);
+
+    final List<EolaireModel.ItemProfile> profile = itemService.getItemProfile(itemId);
+    assertEquals(Collections.singletonList(EolaireModel.ItemProfile.newBuilder()
+        .setItemId(itemId)
+        .setCreated(created)
+        .setDescription(description)
+        .setFlags(flags)
+        .setMetadata(metadata)
+        .setUpdated(created)
+        .build()), profile);
   }
 
   //

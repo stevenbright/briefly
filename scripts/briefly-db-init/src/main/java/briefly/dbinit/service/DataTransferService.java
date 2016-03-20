@@ -132,24 +132,12 @@ public final class DataTransferService {
         // create metadata with series position and known file size
         final Metadata.Builder metadataBuilder = Metadata.newBuilder();
         if (pos != null) {
-          metadataBuilder.addEntries(MetadataEntry.newBuilder()
-              .setKey(MetadataKeys.SERIES_POS_KEY).setValue(VariantValue.newBuilder().setIntValue(pos))
-              .setType(VariantType.INT32)
-              .build());
+          MetadataKeys.addSeriesPos(metadataBuilder, pos);
         }
 
-        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.LIB_ID_KEY)
-            .setType(VariantType.INT64)
-            .setValue(VariantValue.newBuilder().setLongValue(bookMeta.getId())));
-
-        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.LIB_FILE_SIZE_KEY)
-            .setType(VariantType.INT32)
-            .setValue(VariantValue.newBuilder().setIntValue(bookMeta.getFileSize())));
-
-        metadataBuilder.addEntries(MetadataEntry.newBuilder().setKey(MetadataKeys.LIB_ADDED_KEY)
-            .setType(VariantType.INT64)
-            .setValue(VariantValue.newBuilder().setLongValue(bookMeta.getDateAdded().getTime()).build())
-            .build());
+        MetadataKeys.addLibId(metadataBuilder, bookMeta.getId());
+        MetadataKeys.addLibAdded(metadataBuilder, bookMeta.getDateAdded().getTime());
+        MetadataKeys.addLibSize(metadataBuilder, bookMeta.getFileSize());
 
         insertBookProfile(itemId, 1, metadataBuilder.build());
       }
