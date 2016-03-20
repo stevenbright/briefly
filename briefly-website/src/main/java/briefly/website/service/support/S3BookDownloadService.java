@@ -33,6 +33,7 @@ public final class S3BookDownloadService extends AbstractService implements Down
   private String getPresignedBookUrl(long id) {
     final String bookOrigin = "myorigin";
     final long bookId = 1000L + id;
+    // - "${bucketKeyPrefix}/${book.origin}/${book.id}${bucketKeySuffix}"
     final String s3Key = bucketKeyPrefix + '/' + bookOrigin + '/' + bookId + bucketKeySuffix;
     final Date expirationTime = new Date(System.currentTimeMillis() + urlExpirationMillis);
     final GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, s3Key)
