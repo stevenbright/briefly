@@ -144,6 +144,8 @@ public final class EolaireItemServiceTest {
     final String name = "SampleBook";
     final long bookTypeId = actualEntityTypes.stream().filter(entityType -> entityType.getName().equals("book"))
         .collect(Collectors.toList()).get(0).getId();
+    final long authorTypeId = actualEntityTypes.stream().filter(entityType -> entityType.getName().equals("author"))
+        .collect(Collectors.toList()).get(0).getId();
     final long created = UtcTime.days(365 * 35).getTime();
     final String description = "Sample Book Description. Can be a very long one.";
     final long flags = 12003L;
@@ -153,11 +155,20 @@ public final class EolaireItemServiceTest {
     // When:
     final long itemId = itemService.saveItem(name, bookTypeId, description, created, flags, metadata);
 
+    final List<EolaireModel.ItemRelation> relations = Collections.singletonList(EolaireModel.ItemRelation.newBuilder()
+        .setRelationTypeId(authorTypeId).setTargetItemId(1001L).setMetadata(EolaireModel.Metadata.newBuilder().build())
+        .build());
+    itemService.addRelations(itemId, relations);
+
+    final List<EolaireModel.ItemRelation> actualRelations = itemService.getItemRelations(itemId,
+        EolaireModel.RelationsFilterMode.ALL);
+
     // Then:
     final EolaireModel.Item item = itemService.getItemById(itemId);
     assertEquals(EolaireModel.Item.newBuilder()
         .setId(itemId).setName(name).setItemTypeId(bookTypeId)
         .build(), item);
+
 
     final List<EolaireModel.ItemProfile> profile = itemService.getItemProfile(itemId);
     assertEquals(Collections.singletonList(EolaireModel.ItemProfile.newBuilder()
@@ -168,6 +179,8 @@ public final class EolaireItemServiceTest {
         .setMetadata(metadata)
         .setUpdated(created)
         .build()), profile);
+
+    assertEquals(relations, actualRelations);
   }
 
   //

@@ -140,8 +140,8 @@ public class DefaultEolaireItemService extends AbstractService implements Eolair
   //
 
   private void addRelation(long itemId, EolaireModel.ItemRelation itemRelation) {
-    db.update("INSERT INTO item_relation (lhs, rhs, type_id) VALUES (?, ?, ?)", itemId, itemRelation.getTargetItemId(),
-        itemRelation.getRelationTypeId(), toBytes(itemRelation.getMetadata()));
+    db.update("INSERT INTO item_relation (lhs, rhs, type_id, metadata) VALUES (?, ?, ?, ?)", itemId,
+        itemRelation.getTargetItemId(), itemRelation.getRelationTypeId(), toBytes(itemRelation.getMetadata()));
   }
 
   private static byte[] toBytes(EolaireModel.Metadata metadata) {
