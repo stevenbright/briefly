@@ -76,20 +76,40 @@ class CatalogAdapterService {
     const itemByIdPromise = EolaireService.getItemById(id);
     const itemProfilePromise = EolaireService.getItemProfile(id);
     const allEntityTypesPromise = this.getAllEntityTypes();
+    const itemRelations = EolaireService.getItemRelations(id, "ALL");
 
-    let promise = all([itemByIdPromise, itemProfilePromise, allEntityTypesPromise]).then((response) => {
+    let promise = all([itemByIdPromise, itemProfilePromise, allEntityTypesPromise, itemRelations]).then((response) => {
       const item = response[0];
       const profile = response[1];
       const entityTypes = response[2];
+      const relationMap = response[3];
 
-      let itemProfile = {
-        id: item["id"],
-        name: item["name"],
-        type: getItemTypeById(entityTypes, item["itemTypeId"]),
-        profile: mapProfile(profile)
-      };
+      const itemRelations = relationMap["itemRelations"];
+      const relatedItemPromises = itemRelations.map((itemRel) => EolaireService.getItemById(itemRel["targetItemId"]));
 
-      return new Promise((resolve, _) => { resolve(itemProfile); });
+      return all(relatedItemPromises).then((relatedItems) => {
+
+
+        const transformedRelations = itemRelations.map((itemRel, index) => {
+          return {
+            type: getItemTypeById(entityTypes, itemRel["relationTypeId"]),
+            target: {
+              id: itemRel["targetItemId"],
+              name: relatedItems[index]["name"]
+            }
+          };
+        });
+
+        let itemProfile = {
+          id: item["id"],
+          name: item["name"],
+          type: getItemTypeById(entityTypes, item["itemTypeId"]),
+          relations: transformedRelations,
+          profile: mapProfile(profile)
+        };
+
+        return new Promise((resolve, _) => { resolve(itemProfile); });
+      });
     });
 
     return promise;
@@ -117,26 +137,13 @@ class CatalogAdapterService {
 
     // [3] Get item type
     promise = promise.then((response) => {
-      logInfo("Get item type", response);
       const ids = response["itemIds"];
       const newOffsetToken = response["offsetToken"];
       if (ids.length > 0) {
         // map items
-        const itemPromises = ids.map((itemId) => EolaireService.getItemById(itemId).then((item) => {
-          const p = EolaireService.getItemProfile(itemId);
-          return p.then((itemProfile) => {
-            logInfo("itemProfile", itemProfile, "item", item);
-            return {
-              id: item["id"],
-              type,
-              name: item["name"],
-              profile: mapProfile(itemProfile),
-              relatedItems: []
-            };
-          });
-        }));
+        const itemPromises = ids.map((itemId) => this.getItem(itemId));
 
-        // Final result
+        // aggregate promises and return a final one
         return all(itemPromises).then((response) => {
           return { items: response, offsetToken: newOffsetToken };
         });

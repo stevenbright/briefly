@@ -29,24 +29,12 @@ export default class GenericDetailPage extends Component<{},
     }
 
     const details = this.state.itemDetails;
-    console.log("details", details);
+    //console.log("details", details);
 
-    let profileUi;
-    if (details.profile != null) {
-      const createdStr = details.profile.created.toDateString();
-      const updatedStr = details.profile.updated.toDateString();
-
-      profileUi = (
-        <div>
-          <hr/>
-          <p>Created: {createdStr}</p>
-          <p>Updated: {updatedStr}</p>
-
-          <p>/Download Button/</p>
-        </div>);
-    } else {
-      profileUi = (<div/>);
-    }
+    const profileUi = this._getProfileUi(details);
+    const genres = this._getRelatedReferenceListElements(details.relations, "genre", "Genres");
+    const authors = this._getRelatedReferenceListElements(details.relations, "author", "Authors");
+    const languages = this._getRelatedReferenceListElements(details.relations, "language", "Languages");
 
     return (
       <div className="container">
@@ -55,12 +43,56 @@ export default class GenericDetailPage extends Component<{},
         <p>ID: {details.id}</p>
         <p>Item: {details.name}</p>
         <p>Type: {details.type}</p>
-        <p>Genres: TODO</p>
-        <p>Languages: TODO</p>
-        <p>Authors: TODO</p>
+        {genres}
+        {languages}
+        {authors}
         {profileUi}
       </div>
     );
+  }
+
+  _getProfileUi(details): ReactElement {
+    let profileUi;
+    if (details.profile != null) {
+      const p = details.profile;
+      const createdStr = p.created.toDateString();
+      const updatedStr = p.updated.toDateString();
+
+      const libId = "libId" in p.metadata ? (<p>Lib ID: {p.metadata.libId}</p>) : (<span/>);
+      const libAdded = "libAdded" in p.metadata ? (<p>Lib Added: {p.metadata.libAdded.toGMTString()}</p>) : (<span/>);
+      const libSize = "libSize" in p.metadata ? (<p>Lib Size: {p.metadata.libSize}</p>) : (<span/>);
+      const seriesPos = "seriesPos" in p.metadata ? (<p>Series #: {p.metadata.seriesPos}</p>) : (<span/>);
+
+      profileUi = (
+        <div>
+          <hr/>
+          <p>Created: {createdStr}</p>
+          <p>Updated: {updatedStr}</p>
+          {libId}
+          {libAdded}
+          {libSize}
+          {seriesPos}
+
+          <p>/Download Button/</p>
+        </div>);
+    } else {
+      profileUi = (<div/>);
+    }
+
+    return profileUi;
+  }
+
+  _getRelatedReferenceListElements(relations, typeNameFilter, readableTypeName): ReactElement {
+    const elements = relations.filter((rel) => (rel.type === typeNameFilter)).map((rel) => {
+      const itemDetailPageUrl = '#/item/' + rel.target.id;
+      return (<a key={rel.target.id} href={itemDetailPageUrl} title={rel.target.name}>{rel.target.name}</a>);
+    });
+
+    if (elements.length === 0) {
+      return (<span/>);
+    }
+
+    return (<p><span>{readableTypeName}:&nbsp;</span><span>{elements}</span></p>);
   }
 
   _fetch(props): void {
