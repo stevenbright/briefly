@@ -136,7 +136,7 @@ public final class DataTransferService {
               .build());
         }
 
-        metadataBuilder.addEntries(EolaireModel.MetadataEntry.newBuilder().setKey("libraId")
+        metadataBuilder.addEntries(EolaireModel.MetadataEntry.newBuilder().setKey("libId")
             .setType(EolaireModel.VariantType.INT64)
             .setValue(EolaireModel.VariantValue.newBuilder().setLongValue(bookMeta.getId())));
 
