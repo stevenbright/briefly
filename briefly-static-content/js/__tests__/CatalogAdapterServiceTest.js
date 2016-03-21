@@ -2,7 +2,8 @@ jest.dontMock('../service/CatalogAdapterService');
 jest.dontMock('rsvp');
 
 import CatalogAdapterService from '../service/CatalogAdapterService';
-import {Promise} from 'rsvp';
+//import rsvp from 'rsvp';
+var rsvp = require('rsvp');
 
 describe('catalog adapter', () => {
   it('should pass', () => {
@@ -10,10 +11,18 @@ describe('catalog adapter', () => {
   });
 
   pit('should also pass', () => {
-    const promise = CatalogAdapterService.getDemoPromise();
+    let promise = new rsvp.Promise((resolve, _) => {
+      console.log("BBB");
+      resolve(1);
+    });
+    promise = promise.then((data) => {
+      console.log("AAA");
+      expect(data).toBe(1);
+    });
+
     console.log("promise=", promise);
 
-    return promise.then((data) => expect(data).toBe(1));
+    return promise;
   });
 
 //  pit('gets item by id', function () {
