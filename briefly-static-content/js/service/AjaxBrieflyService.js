@@ -1,9 +1,11 @@
-var ajax = require('rsvp-ajax');
-var cache = require('rsvp-cache');
-var rsvp = require('rsvp');
+'use strict';
 
-var AppConstants = require('../util/AppConstants');
-var DEFAULT_LIMIT = AppConstants.DEFAULT_LIMIT;
+import ajax from 'rsvp-ajax';
+import cache from 'rsvp-cache';
+import rsvp from 'rsvp';
+
+import {DEFAULT_LIMIT} from '../util/AppConstants';
+
 
 function prepareRequestWithOffsetAndLimit(offsetToken, limit) {
   limit = limit || DEFAULT_LIMIT;

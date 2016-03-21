@@ -1,6 +1,6 @@
-var React = require('react');
+import React from 'react';
 
-var StarRating = require('../common/StarRating.react');
+import StarRating from '../common/StarRating.react';
 
 module.exports = React.createClass({
 

@@ -1,8 +1,6 @@
-
 'use strict';
 
 import React, {Component} from 'react';
-
 
 type Props = {
   id: number,

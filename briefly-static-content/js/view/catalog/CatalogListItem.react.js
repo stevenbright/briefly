@@ -2,8 +2,8 @@
 
 import React, {Component} from 'react';
 
-var FavStar = require('../common/FavStar.react');
-var InlineCatalogItem = require('../catalog/InlineCatalogItem.react');
+import FavStar from '../common/FavStar.react';
+import InlineCatalogItem from '../catalog/InlineCatalogItem.react';
 
 export default class CatalogListItem extends Component<{},
   /*Props*/{ item: object, isFavorite: boolean },

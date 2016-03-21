@@ -1,10 +1,13 @@
-var React = require('react');
+'use strict';
 
-var RetellReferenceItem = require('../retell/RetellReferenceItem.react');
-var FavStar = require('../common/FavStar.react');
+import React, {Component} from 'react';
 
-module.exports = React.createClass({
-  render: function() {
+import RetellReferenceItem from '../retell/RetellReferenceItem.react';
+import FavStar from '../common/FavStar.react';
+
+export default class DetailPage extends Component<{}, /*Props*/{}, /*State*/{}> {
+
+  render(): ?ReactElement {
     //
     // Model
     //
@@ -102,5 +105,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
-
+}

@@ -1,15 +1,15 @@
 jest.dontMock('../util/uri.js');
 
-var uri = require('../util/uri.js');
-var parseQueryString = uri.parseQueryString;
+import uri from '../util/uri.js';
+const parseQueryString = uri.parseQueryString;
 
 describe('parse query string', function () {
   it('parses one parameter', function () {
     // Given:
-    var url = "http://localhost/resource?debug=1";
+    const url = "http://localhost/resource?debug=1";
 
     // When:
-    var queryParam = parseQueryString(url);
+    const queryParam = parseQueryString(url);
 
     // Then:
     expect(queryParam["debug"]).toBe("1");

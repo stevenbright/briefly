@@ -1,9 +1,12 @@
-var React = require('react');
-var CatalogListItem = require('./CatalogListItem.react');
+'use strict';
 
-module.exports = React.createClass({
-  render: function() {
-    var bookNodes = this.props.items.map(function (item) {
+import React, {Component} from 'react';
+import CatalogListItem from './CatalogListItem.react';
+
+export default class CatalogList extends Component<{}, /*Props*/{}, /*State*/{}> {
+
+  render(): ?ReactElement {
+    const bookNodes = this.props.items.map(function (item) {
       return (<CatalogListItem key={item.id} item={item} isFavorite={false} />);
     });
 
@@ -13,4 +16,4 @@ module.exports = React.createClass({
       </ul>
     );
   }
-});
+}

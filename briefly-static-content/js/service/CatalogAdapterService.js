@@ -89,7 +89,6 @@ class CatalogAdapterService {
 
       return all(relatedItemPromises).then((relatedItems) => {
 
-
         const transformedRelations = itemRelations.map((itemRel, index) => {
           return {
             type: getItemTypeById(entityTypes, itemRel["relationTypeId"]),

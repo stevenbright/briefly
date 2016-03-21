@@ -28,11 +28,14 @@ libs: target node_modules $(TO)/libs/bootstrap
 	cp -r ./node_modules/bootstrap/dist/* $(TO)/libs/bootstrap
 
 watch: node_modules libs target
-	$(NBIN)/watchify -o $(TO)/js/bundle.js -v -d js/main.js
+	$(NBIN)/watchify js/main.js -o $(TO)/js/bundle.js -v -d -t babelify
 
-browserify: node_modules target js/main.js
-	rm -rf $(TO)/js/bundle.js
-	$(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(TO)/js/bundle.js
+
+# $(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(TO)/js/bundle.js
+
+browserify: node_modules target
+	$(NBIN)/browserify js/main.js -t babelify -o $(TO)/js/bundle.js
+
 
 static:
 	mkdir -p $(TO)/css

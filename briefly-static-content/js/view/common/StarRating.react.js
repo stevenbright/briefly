@@ -80,13 +80,13 @@ export default class StarRating extends Component<{}, {}, {}> {
     }.bind(this));
 
     return (
-      <div
+      <span
         className="star-rating"
         onMouseEnter={this._handleMouseEnter}
         onMouseLeave={this._handleMouseLeave}
         onMouseMove={this._handleMouseMove}
         onClick={this._handleClick}>{nodes}
-      </div>
+      </span>
     );
   }
 
