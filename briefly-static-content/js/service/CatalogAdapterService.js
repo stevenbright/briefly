@@ -64,6 +64,10 @@ class CatalogAdapterService {
     this.entityTypes = null;
   }
 
+  getDemoPromise(): Promise {
+    return new Promise((resolve, _) => { resolve(1); });
+  }
+
   getAllEntityTypes(): Promise {
     if (this.entityTypes != null) {
       return new Promise((resolve, _) => { resolve(this.entityTypes); });
