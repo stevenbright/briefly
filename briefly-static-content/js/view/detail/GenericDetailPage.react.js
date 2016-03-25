@@ -73,6 +73,19 @@ export default class GenericDetailPage extends Component<{},
           {libSize}
           {seriesPos}
 
+          <table className="item-details">
+            <tbody>
+              <tr>
+                <td>Lib ID:</td>
+                <td>42</td>
+              </tr>
+              <tr>
+                <td>Type:</td>
+                <td>book</td>
+              </tr>
+            </tbody>
+          </table>
+
           <p>/Download Button/</p>
         </div>);
     } else {
