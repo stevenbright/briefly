@@ -60,5 +60,4 @@ Use ``core.properties`` as a base.
 
 TBD
 TBD
-TBD
 
