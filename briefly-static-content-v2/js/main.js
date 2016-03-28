@@ -21,5 +21,6 @@ window.onload = function () {
     installDebugHooks();
   }
 
-  ReactDOM.render(React.createElement(ViewDispatcher), document.getElementById('main-content'));
+  const viewDispatcher = new ViewDispatcher();
+  viewDispatcher.render(document.getElementById('main-content'));
 }

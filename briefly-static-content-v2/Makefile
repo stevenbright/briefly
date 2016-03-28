@@ -1,6 +1,8 @@
 # Babel+ReactJS makefile
 
-TO			=	target/release/brieflyWebsite/web/static
+TARGET  = target/release/brieflyWebsite
+STATIC  =	$(TARGET)/web/static
+FTL     = $(TARGET)/web/freemarker
 NBIN		= ./node_modules/.bin
 PORT		= 8000
 
@@ -15,32 +17,34 @@ node_modules:
 	npm install --save-dev
 
 target:
-	mkdir -p $(TO)
-	mkdir -p $(TO)/js
+	mkdir -p $(FTL)
+	mkdir -p $(STATIC)
+	mkdir -p $(STATIC)/js
 
 clean:
 	rm -rf target
 
-$(TO)/libs/bootstrap:
-	mkdir -p $(TO)/libs/bootstrap
+$(STATIC)/libs/bootstrap:
+	mkdir -p $(STATIC)/libs/bootstrap
 
-libs: target node_modules $(TO)/libs/bootstrap
-	cp -r ./node_modules/bootstrap/dist/* $(TO)/libs/bootstrap
+libs: target node_modules $(STATIC)/libs/bootstrap
+	cp -r ./node_modules/bootstrap/dist/* $(STATIC)/libs/bootstrap
 
 watch: node_modules libs target
-	$(NBIN)/watchify js/main.js -o $(TO)/js/bundle.js -v -d -t babelify
+	$(NBIN)/watchify js/main.js -o $(STATIC)/js/bundle.js -v -d -t babelify
 
 
-# $(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(TO)/js/bundle.js
+# $(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(STATIC)/js/bundle.js
 
 browserify: node_modules target
-	$(NBIN)/browserify js/main.js -t babelify -o $(TO)/js/bundle.js
+	$(NBIN)/browserify js/main.js -t babelify -o $(STATIC)/js/bundle.js
 
 
 static:
-	mkdir -p $(TO)/css
-	cp -r css/* $(TO)/css
-	cp -r root/* $(TO)/
+	mkdir -p $(STATIC)/css
+	cp -r css/* $(STATIC)/css
+	cp -r root/* $(STATIC)/
+	cp -r freemarker/* $(FTL)
 
 compile: libs browserify static
 
@@ -48,6 +52,6 @@ test: node_modules target
 	npm test
 
 server: node_modules target
-	$(NBIN)/http-server $(TO) -p $(PORT) --utc
+	$(NBIN)/http-server $(STATIC) -p $(PORT) --utc
 
 

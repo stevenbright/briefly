@@ -51,7 +51,7 @@
     <!-- Web app static content -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>briefly-static-content</artifactId>
+      <artifactId>briefly-static-content-v2</artifactId>
       <version>${project.version}</version>
     </dependency>
 

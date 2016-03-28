@@ -21,6 +21,7 @@
   <modules>
     <module>briefly-model</module>
     <module>briefly-static-content</module>
+    <module>briefly-static-content-v2</module>
     <module>briefly-website</module>
   </modules>
 

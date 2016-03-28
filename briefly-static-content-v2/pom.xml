@@ -10,7 +10,7 @@
 
   <artifactId>briefly-static-content-v2</artifactId>
 
-  <name>Briefly Website Static Content</name>
+  <name>Briefly Website Static Content ver. 2</name>
 
   <build>
     <resources>
