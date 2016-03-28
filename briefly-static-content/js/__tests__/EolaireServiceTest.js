@@ -13,6 +13,28 @@ describe('catalog service test', () => {
     ajax.__clearMocks();
   });
 
+  it('getEntityList', () => {
+    // Given:
+    const {default: EolaireService} = require('../service/EolaireService');
+    const expectedVal = 100;
+    const offsetToken = 'offsetToken-0';
+    const limit = 2;
+    let capturedRequest = '<request?>';
+    ajax.__putMockResponse('POST', '/rest/eolaire/entity/list', request => {
+      capturedRequest = request;
+      return expectedVal;
+    });
+
+    // When:
+    let actualVal = '<val?>';
+    EolaireService.getEntityList(offsetToken, limit).then(val => { actualVal = val; });
+    jest.runAllTimers(); // run all promises
+
+    // Then:
+    expect(actualVal).toBe(expectedVal);
+    expect(capturedRequest).toEqual({"offsetToken": offsetToken, "limit": limit});
+  });
+
   it('getItemById', () => {
     // Given:
     const {default: EolaireService} = require('../service/EolaireService');
@@ -22,6 +44,21 @@ describe('catalog service test', () => {
     // When:
     let actualVal = '<none>';
     EolaireService.getItemById(1).then(val => { actualVal = val; });
+    jest.runAllTimers(); // run all promises
+
+    // Then:
+    expect(actualVal).toBe(expectedVal);
+  });
+
+  it('getItemProfile', () => {
+    // Given:
+    const {default: EolaireService} = require('../service/EolaireService');
+    const expectedVal = 100;
+    ajax.__putMockResponse('GET', '/rest/eolaire/item/profile/2', expectedVal);
+
+    // When:
+    let actualVal = '<none>';
+    EolaireService.getItemProfile(2).then(val => { actualVal = val; });
     jest.runAllTimers(); // run all promises
 
     // Then:
