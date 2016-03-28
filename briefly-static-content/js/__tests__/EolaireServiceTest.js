@@ -7,15 +7,18 @@ jest.dontMock('../service/EolaireService');
 
 describe('catalog service test', () => {
   let ajax;
+  let EolaireService;
 
   beforeEach(() => {
     ajax = require('rsvp-ajax');
     ajax.__clearMocks();
+
+    const {default: service} = require('../service/EolaireService');
+    EolaireService = service;
   });
 
   it('getEntityList', () => {
     // Given:
-    const {default: EolaireService} = require('../service/EolaireService');
     const expectedVal = 100;
     const offsetToken = 'offsetToken-0';
     const limit = 2;
@@ -37,7 +40,6 @@ describe('catalog service test', () => {
 
   it('getItemById', () => {
     // Given:
-    const {default: EolaireService} = require('../service/EolaireService');
     const expectedVal = 100;
     ajax.__putMockResponse('GET', '/rest/eolaire/item/entry/1', expectedVal);
 
@@ -52,7 +54,6 @@ describe('catalog service test', () => {
 
   it('getItemProfile', () => {
     // Given:
-    const {default: EolaireService} = require('../service/EolaireService');
     const expectedVal = 100;
     ajax.__putMockResponse('GET', '/rest/eolaire/item/profile/2', expectedVal);
 
@@ -65,51 +66,46 @@ describe('catalog service test', () => {
     expect(actualVal).toBe(expectedVal);
   });
 
-//  it('getItemsByIds', () => {
-//    // Given:
-//    const {default: EolaireService} = require('../service/EolaireService');
-//    const expectedVal = 100;
-//    const ids = [1, 2, 3];
-//    let capturedData = null;
-//    ajax.__putMockResponse('POST', '/rest/eolaire/item/list', (data) => {
-//      capturedData = data;
-//      return expectedVal;
-//    });
-//
-//    // When:
-//    let actualVal = '<none>';
-//    EolaireService.getItemsByIds(ids).then(val => { actualVal = val; });
-//    jest.runAllTimers(); // run all promises
-//
-//    // Then:
-//    expect(actualVal).toBe(expectedVal);
-//    expect(capturedData).toEqual({"itemIds": ids});
-//  });
+  it('getItemByType', () => {
+    // Given:
+    const expectedVal = 100;
+    const itemTypeId = 1;
+    const offsetToken = 'offsetToken-0';
+    const limit = 2;
+    let capturedRequest = '<request?>';
+    ajax.__putMockResponse('POST', '/rest/eolaire/item/query/by-type', request => {
+      capturedRequest = request;
+      return expectedVal;
+    });
 
-//  it('get items', () => {
-//    // Given:
-//    const {default: CatalogService} = require('../service/CatalogService');
-//    let actualVal = '<none>';
-//    const items = [{
-//      "id": 1,
-//      "name": "First",
-//      "genres": ["genre1-1"],
-//      "authors": ["author1-1", "author1-2"]
-//    }, {
-//      "id": 2,
-//      "name": "Second",
-//      "genres": ["genre2-1", "genre2-2"],
-//      "authors": ["author2-1"]
-//    }];
-//    ajax.__putMockResponse('GET', '/rest/items.json', { "items": [1, 2] });
-//    ajax.__putMockResponse('GET', '/rest/item/1.json', items[0]);
-//    ajax.__putMockResponse('GET', '/rest/item/2.json', items[1]);
-//
-//    // When:
-//    CatalogService.getItems().then(val => { actualVal = val; });
-//    jest.runAllTimers(); // run all promises
-//
-//    // Then:
-//    expect(actualVal).toEqual(items);
-//  });
+    // When:
+    let actualVal = '<val?>';
+    EolaireService.getItemByType(itemTypeId, offsetToken, limit).then(val => { actualVal = val; });
+    jest.runAllTimers(); // run all promises
+
+    // Then:
+    expect(actualVal).toBe(expectedVal);
+    expect(capturedRequest).toEqual({"itemTypeId": itemTypeId, "offsetToken": offsetToken, "limit": limit});
+  });
+
+  it('getItemRelations', () => {
+    // Given:
+    const expectedVal = 100;
+    const itemId = 10;
+    const filterMode = 'filterMode-0';
+    let capturedRequest = '<request?>';
+    ajax.__putMockResponse('POST', '/rest/eolaire/item/relations', request => {
+      capturedRequest = request;
+      return expectedVal;
+    });
+
+    // When:
+    let actualVal = '<val?>';
+    EolaireService.getItemRelations(itemId, filterMode).then(val => { actualVal = val; });
+    jest.runAllTimers(); // run all promises
+
+    // Then:
+    expect(actualVal).toBe(expectedVal);
+    expect(capturedRequest).toEqual({"itemId": itemId, "relationsFilterMode": filterMode});
+  });
 });
