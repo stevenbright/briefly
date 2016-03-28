@@ -1,38 +1,43 @@
 'use strict';
 
-jest.mock('rsvp-ajax');
 jest.unmock('rsvp');
 jest.dontMock('../service/CatalogAdapterService');
 
-//import CatalogAdapterService from '../service/CatalogAdapterService';
-
 describe('catalog adapter', () => {
-  it('should pass', () => {
+  let CatalogAdapterService;
+  let EolaireServiceMock;
 
-    expect(1).toBe(1);
+  beforeEach(() => {
+    const rsvp = require('rsvp');
+
+    const {default: eolaireServiceMock} = require('../service/EolaireService');
+    EolaireServiceMock = eolaireServiceMock;
+    // prepare entity list response for all the calls of getAllEntityTypes
+    EolaireServiceMock.getEntityList.mockReturnValue(new rsvp.Promise((resolve, _) => {
+      resolve({
+        "types": [
+          {"id": 1, "name": "author"},
+          {"id": 20, "name": "book"}
+        ]
+      });
+    }));
+
+    const {default: catalogAdapterService} = require('../service/CatalogAdapterService');
+    CatalogAdapterService = catalogAdapterService;
   });
 
-//  pit('gets item by id', function () {
-//    // Given:
-//    // TBD
-//
-//    // When:
-//    const result = 1;
-//
-//    // Then:
-//
-//    return new Promise(function (resolve) { resolve(); });
-//
-//    const promise = new Promise(function (resolve) { resolve(); });
-//    return promise.then(function (data) {
-//      expect("" + result).toBe("1");
-//    });
-////      .then(function() {
-////          expect("" + result).toBe("1");
-//////          expect(apiMock).toBeCalledWith(creds);
-//////          expect(dispatcherMock.mock.calls.length).toBe(2);
-//////          expect(dispatcherMock.mock.calls[0][0]).toEqual({ actionType: Constants.api.user.LOGIN, queryParams: creds, response: Constants.request.PENDING});
-//////          expect(dispatcherMock.mock.calls[1][0]).toEqual({ actionType: Constants.api.user.LOGIN, queryParams: creds, response: successResponse});
-////      });
-//  });
+  it('getAllEntityTypes', () => {
+    // Given:
+    let result = '<none>';
+
+    // When:
+    CatalogAdapterService.getAllEntityTypes().then(val => { result = val; });
+    jest.runAllTimers(); // run all promises
+
+    // Then:
+    expect(result).toEqual({
+      "author": 1,
+      "book": 20
+    });
+  });
 });
