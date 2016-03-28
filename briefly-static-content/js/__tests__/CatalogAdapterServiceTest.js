@@ -1,28 +1,15 @@
-jest.dontMock('../service/CatalogAdapterService');
-jest.dontMock('rsvp');
+'use strict';
 
-import CatalogAdapterService from '../service/CatalogAdapterService';
-//import rsvp from 'rsvp';
-var rsvp = require('rsvp');
+jest.mock('rsvp-ajax');
+jest.unmock('rsvp');
+jest.dontMock('../service/CatalogAdapterService');
+
+//import CatalogAdapterService from '../service/CatalogAdapterService';
 
 describe('catalog adapter', () => {
   it('should pass', () => {
+
     expect(1).toBe(1);
-  });
-
-  pit('should also pass', () => {
-    let promise = new rsvp.Promise((resolve, _) => {
-      console.log("BBB");
-      resolve(1);
-    });
-    promise = promise.then((data) => {
-      console.log("AAA");
-      expect(data).toBe(1);
-    });
-
-    console.log("promise=", promise);
-
-    return promise;
   });
 
 //  pit('gets item by id', function () {
