@@ -13,6 +13,7 @@
 
   <!-- Controllers -->
   <bean class="briefly.website.controller.PublicPageController" autowire="constructor"/>
+  <bean class="briefly.website.controller.PagePartController" autowire="constructor"/>
   <bean class="briefly.website.controller.rest.EolaireRestController" autowire="constructor"/>
 
   <!-- Annotation driven support for MVC controllers -->
