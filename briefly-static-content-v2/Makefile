@@ -2,6 +2,7 @@
 
 TARGET  = target/release/brieflyWebsite
 STATIC  =	$(TARGET)/web/static
+ASSETS  = $(STATIC)/assets
 FTL     = $(TARGET)/web/freemarker
 NBIN		= ./node_modules/.bin
 PORT		= 8000
@@ -18,31 +19,31 @@ node_modules:
 
 target:
 	mkdir -p $(FTL)
-	mkdir -p $(STATIC)
-	mkdir -p $(STATIC)/js
+	mkdir -p $(ASSETS)
+	mkdir -p $(ASSETS)/js
 
 clean:
 	rm -rf target
 
-$(STATIC)/libs/bootstrap:
-	mkdir -p $(STATIC)/libs/bootstrap
+$(ASSETS)/libs/bootstrap:
+	mkdir -p $(ASSETS)/libs/bootstrap
 
-libs: target node_modules $(STATIC)/libs/bootstrap
-	cp -r ./node_modules/bootstrap/dist/* $(STATIC)/libs/bootstrap
+libs: target node_modules $(ASSETS)/libs/bootstrap
+	cp -r ./node_modules/bootstrap/dist/* $(ASSETS)/libs/bootstrap
 
 watch: node_modules libs target
-	$(NBIN)/watchify js/main.js -o $(STATIC)/js/bundle.js -v -d -t babelify
+	$(NBIN)/watchify js/main.js -o $(ASSETS)/js/bundle.js -v -d -t babelify
 
 
-# $(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(STATIC)/js/bundle.js
+# $(NBIN)/browserify . -t [envify --NODE_ENV production] -t [babelify --stage 0] | $(NBIN)/uglifyjs -cm > $(ASSETS)/js/bundle.js
 
 browserify: node_modules target
-	$(NBIN)/browserify js/main.js -t babelify -o $(STATIC)/js/bundle.js
+	$(NBIN)/browserify js/main.js -t babelify -o $(ASSETS)/js/bundle.js
 
 
 static:
-	mkdir -p $(STATIC)/css
-	cp -r css/* $(STATIC)/css
+	mkdir -p $(ASSETS)/css
+	cp -r css/* $(ASSETS)/css
 	cp -r root/* $(STATIC)/
 	cp -r freemarker/* $(FTL)
 

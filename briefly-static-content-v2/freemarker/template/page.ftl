@@ -10,9 +10,9 @@
 
     <title>Briefly v2 &raquo; ${title}</title>
 
-    <link rel="stylesheet" type="text/css" href="/libs/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/libs/bootstrap/css/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="/css/global.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/libs/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/libs/bootstrap/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/global.css" />
   </head>
   <body>
 
@@ -58,7 +58,7 @@
   </div>
 
   <#-- Bundle Page Script -->
-  <script type="text/javascript" src="/js/bundle.js"></script>
+  <script type="text/javascript" src="/assets/js/bundle.js"></script>
 </body>
 </html>
 
