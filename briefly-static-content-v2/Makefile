@@ -46,6 +46,7 @@ static:
 	cp -r css/* $(ASSETS)/css
 	cp -r root/* $(STATIC)/
 	cp -r freemarker/* $(FTL)
+	cp -r assets/* $(ASSETS)
 
 compile: libs browserify static
 
