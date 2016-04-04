@@ -1,4 +1,8 @@
 
+//
+// TODO: remove this
+//
+
 export function setOnclickIfPresent(id, handler) {
   const $e = document.getElementById(id);
   if ($e != null) {

@@ -18,6 +18,8 @@
 
     "watchify": "^3.4.0",
 
+    "jquery": "2.2.2",
+
     "babel-jest": "^9.0.0",
     "jest-cli": "*"
   },

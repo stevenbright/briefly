@@ -3,6 +3,7 @@ import ViewDispatcher from './view/ViewDispatcher';
 import {parseQueryString} from './util/uri';
 import ajax from 'rsvp-ajax';
 
+import $ from 'jquery';
 
 function installDebugHooks() {
   console.log("Installing Debug Hooks...");
@@ -22,5 +23,5 @@ window.onload = function () {
   }
 
   const viewDispatcher = new ViewDispatcher();
-  viewDispatcher.render(document.getElementById('main-content'));
+  viewDispatcher.render($('main-content'));
 }

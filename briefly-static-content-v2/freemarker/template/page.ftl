@@ -27,7 +27,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="g/index"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Briefly</a>
+        <a class="navbar-brand" href="/g/index"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Briefly</a>
       </div>
       <div class="collapse navbar-collapse" id="g-app-navbar-collapse">
         <ul class="nav navbar-nav">
