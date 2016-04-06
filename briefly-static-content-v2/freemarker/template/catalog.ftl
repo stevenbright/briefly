@@ -1,7 +1,7 @@
 <#macro element name attributes>
 <div class="catalog-element">
   <h3>${name}</h3>
-  <#list attribute as attributes>
+  <#list attributes as attribute>
     <p>${attribute.name}:&nbsp;
       <#list attribute.entries as attributeEntry>
         <span>${attributeEntry.name}</span>
