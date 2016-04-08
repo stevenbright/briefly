@@ -1,6 +1,6 @@
-<#macro element name attributes>
+<#macro element id name attributes>
 <div class="catalog-element">
-  <h3>${name}</h3>
+  <a href="/g/detail/${id?c}"><h3>${name}</h3></a>
   <#list attributes as attribute>
     <p>${attribute.name}:&nbsp;
       <#list attribute.entries as attributeEntry>
@@ -14,6 +14,6 @@
 
 <#macro list catalogElementList>
 <#list catalogElementList as catalogElement>
-<@element name=catalogElement.name attributes=catalogElement.attributes/>
+<@element id=catalogElement.id name=catalogElement.name attributes=catalogElement.attributes/>
 </#list>
 </#macro>

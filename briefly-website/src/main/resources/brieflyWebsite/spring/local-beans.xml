@@ -10,4 +10,5 @@
   <bean class="briefly.website.service.support.DefaultOverviewService" autowire="constructor"/>
   <bean class="briefly.website.service.support.DefaultCommentService" autowire="constructor"/>
   <bean class="briefly.website.service.support.DefaultEolaireItemService" autowire="constructor"/>
+  <bean class="briefly.website.service.support.DefaultCatalogAdapterService" autowire="constructor"/>
 </beans>
